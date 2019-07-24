@@ -1,0 +1,15 @@
+/* Custom site-wide CSS */
+
+.bowfolio-green {
+  color:  #376551;
+}
+
+.landing-green-background {
+  background-color: #376551;
+  color: white;
+}
+
+.landing-white-background {
+  background-color: white;
+  color: #376551;
+}
