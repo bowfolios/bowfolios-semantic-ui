@@ -13,3 +13,8 @@
   background-color: white;
   color: #376551;
 }
+
+.reset-margins {
+  margin-top: 0;
+  margin-bottom: 0;
+}
