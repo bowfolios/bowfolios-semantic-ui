@@ -15,7 +15,7 @@ const formSchema = new SimpleSchema({
   firstName: { type: String, label: 'First', optional: true },
   lastName: { type: String, label: 'Last', optional: true },
   bio: { type: String, label: 'Biographical statement', optional: true },
-  department: { type: String, label: 'Department', optional: true },
+  title: { type: String, label: 'Title', optional: true },
   picture: { type: String, label: 'Picture URL', optional: true },
   interests: { type: Array, label: 'Interests', optional: true },
   'interests.$': { type: String, allowedValues: ['Software Engineering', 'Networking', 'AI'] },
@@ -62,7 +62,7 @@ class Home extends React.Component {
                 </Form.Group>
                 <LongTextField name='bio' placeholder='Write a little bit about yourself.'/>
                 <Form.Group widths={'equal'}>
-                  <TextField name='department' showInlineError={true} placeholder={'Department'}/>
+                  <TextField name='title' showInlineError={true} placeholder={'Title'}/>
                   <TextField name='picture' showInlineError={true} placeholder={'URL to picture'}/>
                 </Form.Group>
                 <Form.Group widths={'equal'}>
