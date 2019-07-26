@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Container, Loader, Card, Image, Icon } from 'semantic-ui-react';
+import { Container, Loader, Card, Image, Label, Header } from 'semantic-ui-react';
 import { Stuffs } from '/imports/api/stuff/Stuff';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
@@ -9,8 +9,7 @@ import { _ } from 'meteor/underscore';
 const profileData = [
   { firstName: 'Philip', lastName: 'Johnson', bio: 'I am a Professor and like to paddle outrigger canoes.',
     title: 'Professor',
-    interests: ['Software Engineering', 'Climate Change'], projects: ['https://www.radgrad.org/img/radgrad_logo.png',
-      'https://openpowerquality.org/img/opqlogo_white.png'],
+    interests: ['Software Engineering', 'Climate Change'], projects: ['https://www.radgrad.org/img/radgrad_logo.png'],
     picture: 'https://philipmjohnson.github.io/images/philip2.jpeg', email: 'johnson@hawaii.edu' },
   { firstName: 'Henri', lastName: 'Casanova', bio: 'In my spare time, I like to scuba dive.',
     title: 'Professor', interests: ['HPC', 'Parallel Computing'],
@@ -23,11 +22,11 @@ const profileData = [
     picture: 'https://cammoore.github.io/images/cam-moore.jpg', email: 'cmoore@hawaii.edu' },
   { firstName: 'Anthony', lastName: 'Christe', bio: 'I enjoy competitive bicycle racing.',
     title: 'Ph.D. Student', interests: ['AI', 'Distributed Computing'],
-    projects: ['https://openpowerquality.org/img/opqlogo_white.png'],
+    projects: ['http://intellitech.pro/wp-content/uploads/2016/12/hadoop-300x293.png'],
     picture: 'https://anthonyjchriste.github.io/images/me.png', email: 'achiste@hawaii.edu' },
   { firstName: 'Serge', lastName: 'Negrashov', bio: 'Most weekends, you can find me on my 8 foot dinghy.',
     title: 'Ph.D. Student', interests: ['scalable IP networks'],
-    projects: ['https://openpowerquality.org/img/opqlogo_white.png'],
+    projects: ['https://www.raspberrypi.org/app/uploads/2018/03/RPi-Logo-Reg-SCREEN-199x250.png'],
     picture: 'https://sergey-negrashov.github.io/images/serge.jpg', email: 'sin8@hawaii.edu' },
 ];
 
@@ -45,10 +44,13 @@ const MakeCard = (props) => (
       </Card.Description>
     </Card.Content>
     <Card.Content extra>
-      <a>
-        <Icon name='user' />
-        22 Friends
-      </a>
+      <Header as='h5'>Interests</Header>
+      {_.map(props.profile.interests,
+        (interest, index) => <Label key={index} size='tiny' color='teal' tag>{interest}</Label>)}
+    </Card.Content>
+    <Card.Content extra>
+      <Header as='h5'>Projects</Header>
+      {_.map(props.profile.projects, (project, index) => <Image key={index} size='tiny' src={project}/>)}
     </Card.Content>
   </Card>
 );
@@ -74,7 +76,7 @@ class Profiles extends React.Component {
       <div style={style}>
         <Container>
           <Card.Group>
-            {_.map(profileData, (profile) => <MakeCard profile={profile} />)}
+            {_.map(profileData, (profile, index) => <MakeCard key={index} profile={profile} />)}
           </Card.Group>
         </Container>
       </div>
