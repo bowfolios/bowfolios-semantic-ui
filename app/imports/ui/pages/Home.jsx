@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid, Segment, Header, Form } from 'semantic-ui-react';
 import AutoForm from 'uniforms-semantic/AutoForm';
 import TextField from 'uniforms-semantic/TextField';
+import LongTextField from 'uniforms-semantic/LongTextField';
 import SubmitField from 'uniforms-semantic/SubmitField';
 import swal from 'sweetalert';
 import 'uniforms-bridge-simple-schema-2'; // required for Uniforms
@@ -13,6 +14,7 @@ const formSchema = new SimpleSchema({
   email: { type: String, label: 'Email', optional: true },
   firstName: { type: String, label: 'First', optional: true },
   lastName: { type: String, label: 'Last', optional: true },
+  bio: { type: String, label: 'Biographical statement', optional: true },
   department: { type: String, label: 'Department', optional: true },
   picture: { type: String, label: 'Picture URL', optional: true },
   interests: { type: Array, label: 'Interests', optional: true },
@@ -58,6 +60,7 @@ class Home extends React.Component {
                   <TextField name='lastName' showInlineError={true} placeholder={'Last Name'}/>
                   <TextField name='email' showInlineError={true} placeholder={'email'} disabled />
                 </Form.Group>
+                <LongTextField name='bio' placeholder='Write a little bit about yourself.'/>
                 <Form.Group widths={'equal'}>
                   <TextField name='department' showInlineError={true} placeholder={'Department'}/>
                   <TextField name='picture' showInlineError={true} placeholder={'URL to picture'}/>
