@@ -9,6 +9,7 @@ import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
 import Home from '../pages/Home';
 import Profiles from '../pages/Profiles';
+import AddProject from '../pages/AddProject';
 import ListStuff from '../pages/ListStuff';
 import ListStuffAdmin from '../pages/ListStuffAdmin';
 import AddStuff from '../pages/AddStuff';
@@ -22,13 +23,15 @@ import Signout from '../pages/Signout';
 class App extends React.Component {
   render() {
     return (
-        <Router>
-          <div>
-            <NavBar/>
+      <Router>
+        <div>
+          <NavBar/>
+          <div style={{ paddingTop: '20px', paddingBottom: '20px' }}>
             <Switch>
               <Route exact path="/" component={Landing}/>
               <Route path="/home" component={Home}/>
               <Route path="/profiles" component={Profiles}/>
+              <Route path="/addproject" component={AddProject}/>
               <Route path="/signin" component={Signin}/>
               <Route path="/signup" component={Signup}/>
               <ProtectedRoute path="/list" component={ListStuff}/>
@@ -38,9 +41,10 @@ class App extends React.Component {
               <ProtectedRoute path="/signout" component={Signout}/>
               <Route component={NotFound}/>
             </Switch>
-            <Footer/>
           </div>
-        </Router>
+          <Footer/>
+        </div>
+      </Router>
     );
   }
 }
@@ -56,9 +60,9 @@ const ProtectedRoute = ({ component: Component, ...rest }) => (
     render={(props) => {
       const isLogged = Meteor.userId() !== null;
       return isLogged ?
-          (<Component {...props} />) :
-          (<Redirect to={{ pathname: '/signin', state: { from: props.location } }}/>
-      );
+        (<Component {...props} />) :
+        (<Redirect to={{ pathname: '/signin', state: { from: props.location } }}/>
+        );
     }}
   />
 );
@@ -69,17 +73,17 @@ const ProtectedRoute = ({ component: Component, ...rest }) => (
  * @param {any} { component: Component, ...rest }
  */
 const AdminProtectedRoute = ({ component: Component, ...rest }) => (
-    <Route
-        {...rest}
-        render={(props) => {
-          const isLogged = Meteor.userId() !== null;
-          const isAdmin = Roles.userIsInRole(Meteor.userId(), 'admin');
-          return (isLogged && isAdmin) ?
-              (<Component {...props} />) :
-              (<Redirect to={{ pathname: '/signin', state: { from: props.location } }}/>
-              );
-        }}
-    />
+  <Route
+    {...rest}
+    render={(props) => {
+      const isLogged = Meteor.userId() !== null;
+      const isAdmin = Roles.userIsInRole(Meteor.userId(), 'admin');
+      return (isLogged && isAdmin) ?
+        (<Component {...props} />) :
+        (<Redirect to={{ pathname: '/signin', state: { from: props.location } }}/>
+        );
+    }}
+  />
 );
 
 /** Require a component and location to be passed to each ProtectedRoute. */

@@ -4,6 +4,7 @@ import AutoForm from 'uniforms-semantic/AutoForm';
 import TextField from 'uniforms-semantic/TextField';
 import LongTextField from 'uniforms-semantic/LongTextField';
 import SubmitField from 'uniforms-semantic/SubmitField';
+import ErrorsField from 'uniforms-semantic/ErrorsField';
 import swal from 'sweetalert';
 import 'uniforms-bridge-simple-schema-2'; // required for Uniforms
 import SimpleSchema from 'simpl-schema';
@@ -11,20 +12,18 @@ import MultiSelectField from '../forms/controllers/MultiSelectField';
 
 /** Create a schema to specify the structure of the data to appear in the form. */
 const formSchema = new SimpleSchema({
-  email: { type: String, label: 'Email', optional: true },
-  firstName: { type: String, label: 'First', optional: true },
-  lastName: { type: String, label: 'Last', optional: true },
-  bio: { type: String, label: 'Biographical statement', optional: true },
-  title: { type: String, label: 'Title', optional: true },
-  picture: { type: String, label: 'Picture URL', optional: true },
+  name: String,
+  description: String,
+  picture: String,
   interests: { type: Array, label: 'Interests', optional: true },
   'interests.$': { type: String, allowedValues: ['Software Engineering', 'Networking', 'AI'] },
-  projects: { type: Array, label: 'Projects', optional: true },
-  'projects.$': { type: String, allowedValues: ['RadGrad', 'OPQ'] },
+  participants: { type: Array, label: 'Participants', optional: true },
+  'participants.$': { type: String,
+    allowedValues: ['Philip Johnson', 'Henri Casanova', 'Edo Biagioni', 'Serge Negrashov'] },
 });
 
 /** Renders the Page for adding a document. */
-class Home extends React.Component {
+class AddProject extends React.Component {
 
   /** On submit, insert the data. */
   submit(data, formRef) {
@@ -39,36 +38,30 @@ class Home extends React.Component {
     //       formRef.reset();
     //     }
     //   });
-    swal('Success', 'Profile updated successfully', 'success');
+    swal('Success', data, 'success');
     formRef.reset();
   }
 
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
   render() {
     let fRef = null;
-    const model = { email: 'johnson@hawaii.edu' };
     return (
         <Grid container centered>
           <Grid.Column>
-            <Header as="h2" textAlign="center">Your Bowfolios Profile</Header>
-            <AutoForm ref={ref => { fRef = ref; }} model={model}
-                      schema={formSchema} onSubmit={data => this.submit(data, fRef)}>
+            <Header as="h2" textAlign="center">Add Project</Header>
+            <AutoForm ref={ref => { fRef = ref; }} schema={formSchema} onSubmit={data => this.submit(data, fRef)} >
               <Segment>
                 <Form.Group widths={'equal'}>
-                  <TextField name='firstName' showInlineError={true} placeholder={'First Name'}/>
-                  <TextField name='lastName' showInlineError={true} placeholder={'Last Name'}/>
-                  <TextField name='email' showInlineError={true} placeholder={'email'} disabled />
+                  <TextField name='name' showInlineError={true} placeholder='Project name'/>
+                  <TextField name='picture' showInlineError={true} placeholder='URL to project picture/icon'/>
                 </Form.Group>
-                <LongTextField name='bio' placeholder='Write a little bit about yourself.'/>
-                <Form.Group widths={'equal'}>
-                  <TextField name='title' showInlineError={true} placeholder={'Title'}/>
-                  <TextField name='picture' showInlineError={true} placeholder={'URL to picture'}/>
-                </Form.Group>
+                <LongTextField name='description' placeholder='Describe the project here'/>
                 <Form.Group widths={'equal'}>
                   <MultiSelectField name='interests' showInlineError={true} placeholder={'Interests'}/>
-                  <MultiSelectField name='projects' showInlineError={true} placeholder={'Projects'}/>
+                  <MultiSelectField name='participants' showInlineError={true} placeholder={'Participants'}/>
                 </Form.Group>
-                <SubmitField value='Update'/>
+                <SubmitField value='Submit'/>
+                <ErrorsField/>
               </Segment>
             </AutoForm>
           </Grid.Column>
@@ -77,4 +70,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+export default AddProject;
