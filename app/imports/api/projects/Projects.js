@@ -9,6 +9,7 @@ const Projects = new Mongo.Collection('Projects');
 /** Define a schema to specify the structure of each document in the collection. */
 const ProjectSchema = new SimpleSchema({
   name: String,
+  homepage: { type: String, optional: true },
   description: { type: String, optional: true },
   picture: { type: String, optional: true },
   interests: { type: Array, optional: true },

@@ -8,8 +8,8 @@ const ProfilesInterests = new Mongo.Collection('ProfilesInterests');
 
 /** Define a schema to specify the structure of each document in the collection. */
 const ProfileInterestSchema = new SimpleSchema({
-  email: String,
-  name: String,
+  profile: String,
+  interest: String,
 }, { tracker: Tracker });
 
 /** Attach this schema to the collection. */
