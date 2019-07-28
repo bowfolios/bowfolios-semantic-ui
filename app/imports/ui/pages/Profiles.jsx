@@ -14,7 +14,7 @@ const profileData = [
   { firstName: 'Henri', lastName: 'Casanova', bio: 'In my spare time, I like to scuba dive.',
     title: 'Professor', interests: ['HPC', 'Parallel Computing'],
     projects: ['https://wrench-project.org/images/logo-vertical.png'],
-    picture: 'https://github.com/ics-portfolios/ics-portfolios.github.io/raw/master/images/casanova.jpg',
+    picture: 'http://www.ics.hawaii.edu/wp-content/uploads/2013/08/Henri_Casanova1.jpg',
     email: 'henric@hawaii.edu' },
   { firstName: 'Carleton', lastName: 'Moore', bio: 'Every summer, I enjoy visiting Portland, Oregon.',
     title: 'Assistant Professor',
@@ -44,9 +44,8 @@ const MakeCard = (props) => (
       </Card.Description>
     </Card.Content>
     <Card.Content extra>
-      <Header as='h5'>Interests</Header>
       {_.map(props.profile.interests,
-        (interest, index) => <Label key={index} size='tiny' color='teal' tag>{interest}</Label>)}
+        (interest, index) => <Label key={index} size='tiny' color='teal'>{interest}</Label>)}
     </Card.Content>
     <Card.Content extra>
       <Header as='h5'>Projects</Header>
@@ -71,15 +70,12 @@ class Profiles extends React.Component {
 
   /** Render the page once subscriptions have been received. */
   renderPage() {
-    const style = { paddingTop: '20px', paddingBottom: '20px' };
     return (
-      <div style={style}>
-        <Container>
-          <Card.Group>
-            {_.map(profileData, (profile, index) => <MakeCard key={index} profile={profile} />)}
-          </Card.Group>
-        </Container>
-      </div>
+      <Container>
+        <Card.Group>
+          {_.map(profileData, (profile, index) => <MakeCard key={index} profile={profile}/>)}
+        </Card.Group>
+      </Container>
     );
   }
 }
