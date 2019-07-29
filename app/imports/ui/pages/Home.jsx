@@ -37,8 +37,9 @@ class Home extends React.Component {
 
   /** On submit, insert the data. */
   submit(data, formRef) {
-    const { email, firstName, lastName, bio, title, picture, interests, projects } = data;
-    Profiles.update({ email }, { $set: { email, firstName, lastName, bio, title, picture } });
+    const { email, firstName, lastName, bio, title, picture, interests, projects, _id } = data;
+    console.log(_id);
+    Profiles.update(_id, { $set: { email, firstName, lastName, bio, title, picture } });
     ProfilesInterests.remove({ profile: email });
     ProfilesProjects.remove({ profile: email });
     interests.map((interest) => ProfilesInterests.insert({ profile: email, interest }));
