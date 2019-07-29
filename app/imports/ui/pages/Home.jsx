@@ -37,18 +37,13 @@ class Home extends React.Component {
 
   /** On submit, insert the data. */
   submit(data, formRef) {
-    // const { name, quantity, condition } = data;
-    // const owner = Meteor.user().username;
-    // Stuffs.insert({ name, quantity, condition, owner },
-    //   (error) => {
-    //     if (error) {
-    //       swal('Error', error.message, 'error');
-    //     } else {
-    //       swal('Success', 'Item added successfully', 'success');
-    //       formRef.reset();
-    //     }
-    //   });
-    swal('Success', 'Profile updated successfully', 'success');
+    const { email, firstName, lastName, bio, title, picture, interests, projects } = data;
+    Profiles.update({ email }, { $set: { email, firstName, lastName, bio, title, picture } });
+    ProfilesInterests.remove({ profile: email });
+    ProfilesProjects.remove({ profile: email });
+    interests.map((interest) => ProfilesInterests.insert({ profile: email, interest }));
+    projects.map((project) => ProfilesProjects.insert({ profile: email, project }));
+    swal('Success', 'Item added successfully', 'success');
     formRef.reset();
   }
 
@@ -67,7 +62,9 @@ class Home extends React.Component {
       <Grid container centered>
         <Grid.Column>
           <Header as="h2" textAlign="center">Your Profile</Header>
-          <AutoForm ref={ref => { fRef = ref; }} model={model}
+          <AutoForm ref={ref => {
+            fRef = ref;
+          }} model={model}
                     schema={formSchema} onSubmit={data => this.submit(data, fRef)}>
             <Segment>
               <Form.Group widths={'equal'}>
