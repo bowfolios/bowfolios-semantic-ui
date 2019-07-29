@@ -3,8 +3,11 @@ import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import { Tracker } from 'meteor/tracker';
 
+/** The name of the collection and the global publication. */
+const projectsInterestsName = 'ProjectsInterests';
+
 /** Define a Mongo collection to hold the data. */
-const ProjectsInterests = new Mongo.Collection('ProjectsInterests');
+const ProjectsInterests = new Mongo.Collection(projectsInterestsName);
 
 /** Define a schema to specify the structure of each document in the collection. */
 const ProjectInterestSchema = new SimpleSchema({
@@ -15,8 +18,6 @@ const ProjectInterestSchema = new SimpleSchema({
 /** Attach this schema to the collection. */
 ProjectsInterests.attachSchema(ProjectInterestSchema);
 
-/** Define a publication to publish this collection. */
-Meteor.publish('ProjectsInterests', () => ProjectsInterests.find());
 
 /** Make the collection and schema available to other code. */
-export { ProjectsInterests, ProjectInterestSchema };
+export { ProjectsInterests, ProjectInterestSchema, projectsInterestsName };
