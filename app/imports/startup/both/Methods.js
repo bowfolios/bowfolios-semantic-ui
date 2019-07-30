@@ -1,7 +1,9 @@
 import { Meteor } from 'meteor/meteor';
+import { Projects } from '../../api/projects/Projects';
 import { Profiles } from '../../api/profiles/Profiles';
 import { ProfilesInterests } from '../../api/profiles/ProfilesInterests';
 import { ProfilesProjects } from '../../api/profiles/ProfilesProjects';
+import { ProjectsInterests } from '../../api/projects/ProjectsInterests';
 
 const updateProfileMethod = 'Profiles.update';
 
@@ -26,4 +28,20 @@ Meteor.methods({
   },
 });
 
-export { updateProfileMethod };
+const addProjectMethod = 'Projects.add';
+
+/**
+ * Creates a new project in the Projects collection, and also updates ProfilesProjects and ProjectsInterests.
+ */
+Meteor.methods({
+  'Projects.add'({ name, description, picture, interests, participants, homepage }) {
+    Projects.insert({ name, description, picture, homepage });
+    ProfilesProjects.remove({ project: name });
+    ProjectsInterests.remove({ project: name });
+    interests.map((interest) => ProjectsInterests.insert({ project: name, interest }));
+    participants.map((participant) => ProfilesProjects.insert({ project: name, profile: participant }));
+  },
+});
+
+
+export { updateProfileMethod, addProjectMethod };
