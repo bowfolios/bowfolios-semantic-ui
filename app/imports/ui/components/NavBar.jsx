@@ -16,6 +16,9 @@ class NavBar extends React.Component {
           <Image size='mini' src="/images/logo.png"/>
           <span className='bowfolio-green' style={{ fontWeight: 800, fontSize: '24px' }}>Bowfolios</span>
         </Menu.Item>
+        {this.props.currentUser ? (
+          <Menu.Item as={NavLink} activeClassName="active" exact to="/home" key='home'>Home</Menu.Item>
+        ) : ''}
         <Menu.Item as={NavLink} activeClassName="active" exact to="/profiles" key='profiles'>Profiles</Menu.Item>
         <Menu.Item as={NavLink} activeClassName="active" exact to="/projects" key='projects'>Projects</Menu.Item>
         {this.props.currentUser ? (

@@ -14,6 +14,7 @@ function getProfileData(email) {
   const interests = _.pluck(ProfilesInterests.find({ profile: email }).fetch(), 'interest');
   const projects = _.pluck(ProfilesProjects.find({ profile: email }).fetch(), 'project');
   const projectPictures = projects.map(project => Projects.findOne({ name: project }).picture);
+  // console.log(_.extend({ }, data, { interests, projects: projectPictures }));
   return _.extend({ }, data, { interests, projects: projectPictures });
 }
 
