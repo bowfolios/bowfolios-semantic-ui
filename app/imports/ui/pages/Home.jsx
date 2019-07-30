@@ -17,6 +17,7 @@ import { Profiles, profilesName } from '../../api/profiles/Profiles';
 import { ProfilesInterests, profilesInterestsName } from '../../api/profiles/ProfilesInterests';
 import { ProfilesProjects, profilesProjectsName } from '../../api/profiles/ProfilesProjects';
 import { Projects, projectsName } from '../../api/projects/Projects';
+import { updateProfileMethod } from '../../startup/both/Methods';
 
 /** Create a schema to specify the structure of the data to appear in the form. */
 const makeSchema = (allInterests, allProjects) => new SimpleSchema({
@@ -37,15 +38,14 @@ class Home extends React.Component {
 
   /** On submit, insert the data. */
   submit(data, formRef) {
-    const { email, firstName, lastName, bio, title, picture, interests, projects, _id } = data;
-    console.log(_id);
-    Profiles.update(_id, { $set: { email, firstName, lastName, bio, title, picture } });
-    ProfilesInterests.remove({ profile: email });
-    ProfilesProjects.remove({ profile: email });
-    interests.map((interest) => ProfilesInterests.insert({ profile: email, interest }));
-    projects.map((project) => ProfilesProjects.insert({ profile: email, project }));
-    swal('Success', 'Item added successfully', 'success');
-    formRef.reset();
+    Meteor.call(updateProfileMethod, data, (error) => {
+      if (error) {
+        swal('Error', error.message, 'error');
+      } else {
+        swal('Success', 'Profile updated successfully', 'success');
+        formRef.reset();
+      }
+    });
   }
 
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
