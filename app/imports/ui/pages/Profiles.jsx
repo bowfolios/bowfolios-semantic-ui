@@ -11,39 +11,11 @@ import { Projects, projectsName } from '../../api/projects/Projects';
 
 function getProfileData(email) {
   const data = Profiles.findOne({ email });
-  console.log('data', data);
   const interests = _.pluck(ProfilesInterests.find({ profile: email }).fetch(), 'interest');
-  console.log('interests', interests);
   const projects = _.pluck(ProfilesProjects.find({ profile: email }).fetch(), 'project');
-  console.log('projects', projects);
-  const projectPictures = projects.map(project => _.pluck(Projects.find({ name: project }, 'picture')));
-  console.log('pictures', projectPictures);
+  const projectPictures = projects.map(project => Projects.findOne({ name: project }).picture);
   return _.extend({ }, data, { interests, projects: projectPictures });
 }
-
-// const profileDataOld = [
-//   { firstName: 'Philip', lastName: 'Johnson', bio: 'I am a Professor and like to paddle outrigger canoes.',
-//     title: 'Professor',
-//     interests: ['Software Engineering'], projects: ['https://www.radgrad.org/img/radgrad_logo.png'],
-//     picture: 'https://philipmjohnson.github.io/images/philip2.jpeg', email: 'johnson@hawaii.edu' },
-//   { firstName: 'Henri', lastName: 'Casanova', bio: 'In my spare time, I like to scuba dive.',
-//     title: 'Professor', interests: ['HPC', 'Parallel Computing'],
-//     projects: ['https://wrench-project.org/images/logo-vertical.png'],
-//     picture: 'http://www.ics.hawaii.edu/wp-content/uploads/2013/08/Henri_Casanova1.jpg',
-//     email: 'henric@hawaii.edu' },
-//   { firstName: 'Carleton', lastName: 'Moore', bio: 'Every summer, I enjoy visiting Portland, Oregon.',
-//     title: 'Assistant Professor',
-//     interests: ['Software Engineering'], projects: ['https://www.radgrad.org/img/radgrad_logo.png'],
-//     picture: 'https://cammoore.github.io/images/cam-moore.jpg', email: 'cmoore@hawaii.edu' },
-//   { firstName: 'Anthony', lastName: 'Christe', bio: 'I enjoy competitive bicycle racing.',
-//     title: 'Ph.D. Student', interests: ['AI', 'Distributed Computing'],
-//     projects: ['http://intellitech.pro/wp-content/uploads/2016/12/hadoop-300x293.png'],
-//     picture: 'https://anthonyjchriste.github.io/images/me.png', email: 'achiste@hawaii.edu' },
-//   { firstName: 'Serge', lastName: 'Negrashov', bio: 'Most weekends, you can find me on my 8 foot dinghy.',
-//     title: 'Ph.D. Student', interests: ['scalable IP networks'],
-//     projects: ['https://www.raspberrypi.org/app/uploads/2018/03/RPi-Logo-Reg-SCREEN-199x250.png'],
-//     picture: 'https://sergey-negrashov.github.io/images/serge.jpg', email: 'sin8@hawaii.edu' },
-// ];
 
 /** Component for layout out a Profile Card. */
 const MakeCard = (props) => (
@@ -59,7 +31,7 @@ const MakeCard = (props) => (
       </Card.Description>
     </Card.Content>
     <Card.Content extra>
-      {_.map(props.profile.interest,
+      {_.map(props.profile.interests,
         (interest, index) => <Label key={index} size='tiny' color='teal'>{interest}</Label>)}
     </Card.Content>
     <Card.Content extra>
