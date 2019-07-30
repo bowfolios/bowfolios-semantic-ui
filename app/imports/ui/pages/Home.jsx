@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Segment, Header, Form } from 'semantic-ui-react';
+import { Grid, Segment, Header, Form, Loader } from 'semantic-ui-react';
 import AutoForm from 'uniforms-semantic/AutoForm';
 import TextField from 'uniforms-semantic/TextField';
 import LongTextField from 'uniforms-semantic/LongTextField';
@@ -37,36 +37,38 @@ const makeSchema = (allInterests, allProjects) => new SimpleSchema({
 class Home extends React.Component {
 
   /** On submit, insert the data. */
-  submit(data, formRef) {
+  submit(data) {
     Meteor.call(updateProfileMethod, data, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
       } else {
         swal('Success', 'Profile updated successfully', 'success');
-        formRef.reset();
       }
     });
   }
 
-  /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
+  /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
   render() {
-    let fRef = null;
-    // Create the form schema for uniforms.
-    const allInterests = _.pluck(this.props.interestDocs, 'name');
-    const allProjects = _.pluck(this.props.projectDocs, 'name');
+    return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
+  }
+
+  /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
+  renderPage() {
+    const email = Meteor.user().username;
+    // Create the form schema for uniforms. Need to determine all interests and projects for muliselect list.
+    const allInterests = _.pluck(Interests.find().fetch(), 'name');
+    const allProjects = _.pluck(Projects.find().fetch(), 'name');
     const formSchema = makeSchema(allInterests, allProjects);
     // Now create the model with all the user information.
-    const projects = _.pluck(this.props.profilesProjectsDocs, 'project');
-    const interests = _.pluck(this.props.profilesInterestsDocs, 'interest');
-    const model = _.extend({}, this.props.profileDoc, { interests, projects });
+    const projects = _.pluck(ProfilesProjects.find({ profile: email }).fetch(), 'project');
+    const interests = _.pluck(ProfilesInterests.find({ profile: email }).fetch(), 'interest');
+    const profile = Profiles.findOne({ email });
+    const model = _.extend({}, profile, { interests, projects });
     return (
       <Grid container centered>
         <Grid.Column>
           <Header as="h2" textAlign="center">Your Profile</Header>
-          <AutoForm ref={ref => {
-            fRef = ref;
-          }} model={model}
-                    schema={formSchema} onSubmit={data => this.submit(data, fRef)}>
+          <AutoForm model={model} schema={formSchema} onSubmit={data => this.submit(data)}>
             <Segment>
               <Form.Group widths={'equal'}>
                 <TextField name='firstName' showInlineError={true} placeholder={'First Name'}/>
@@ -93,16 +95,11 @@ class Home extends React.Component {
 
 Home.propTypes = {
   ready: PropTypes.bool.isRequired,
-  interestDocs: PropTypes.array.isRequired,
-  profileDoc: PropTypes.object,
-  projectDocs: PropTypes.array.isRequired,
-  profilesInterestsDocs: PropTypes.array.isRequired,
-  profilesProjectsDocs: PropTypes.array.isRequired,
 };
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
-  // Get access to Stuff documents.
+  // Ensure that minimongo is populated with all collections prior to running render().
   const sub1 = Meteor.subscribe(interestName);
   const sub2 = Meteor.subscribe(profilesName);
   const sub3 = Meteor.subscribe(profilesInterestsName);
@@ -110,10 +107,5 @@ export default withTracker(() => {
   const sub5 = Meteor.subscribe(projectsName);
   return {
     ready: sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready(),
-    profileDoc: Profiles.findOne({ email: Meteor.user().username }),
-    interestDocs: Interests.find().fetch(),
-    projectDocs: Projects.find().fetch(),
-    profilesInterestsDocs: ProfilesInterests.find({ profile: Meteor.user().username }).fetch(),
-    profilesProjectsDocs: ProfilesProjects.find({ profile: Meteor.user().username }).fetch(),
   };
 })(Home);
