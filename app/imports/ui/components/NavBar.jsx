@@ -60,5 +60,5 @@ const NavBarContainer = withTracker(() => ({
   currentUser: Meteor.user() ? Meteor.user().username : '',
 }))(NavBar);
 
-/** Enable ReactRouter for this component. https://reacttraining.com/react-router/web/api/withRouter */
+/** Enable ReactRouter so that links work. */
 export default withRouter(NavBarContainer);

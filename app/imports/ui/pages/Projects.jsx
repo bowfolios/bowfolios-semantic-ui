@@ -9,12 +9,12 @@ import { ProfilesProjects, profilesProjectsName } from '../../api/profiles/Profi
 import { Projects, projectsName } from '../../api/projects/Projects';
 import { ProjectsInterests, projectsInterestsName } from '../../api/projects/ProjectsInterests';
 
+/** Gets the Project data as well as Profiles and Interests associated with the passed Project name. */
 function getProjectData(name) {
   const data = Projects.findOne({ name });
   const interests = _.pluck(ProjectsInterests.find({ project: name }).fetch(), 'interest');
   const profiles = _.pluck(ProfilesProjects.find({ project: name }).fetch(), 'profile');
   const profilePictures = profiles.map(profile => Profiles.findOne({ email: profile }).picture);
-  // console.log(_.extend({ }, data, { interests, projects: projectPictures }));
   return _.extend({ }, data, { interests, participants: profilePictures });
 }
 
@@ -41,12 +41,11 @@ const MakeCard = (props) => (
   </Card>
 );
 
-/** Properties */
 MakeCard.propTypes = {
   project: PropTypes.object.isRequired,
 };
 
-/** Renders the Profile Collection as a set of Cards. */
+/** Renders the Project Collection as a set of Cards. */
 class ProjectsPage extends React.Component {
 
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */

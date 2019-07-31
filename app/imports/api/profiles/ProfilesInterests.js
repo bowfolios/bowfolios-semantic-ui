@@ -17,6 +17,5 @@ const ProfileInterestSchema = new SimpleSchema({
 /** Attach this schema to the collection. */
 ProfilesInterests.attachSchema(ProfileInterestSchema);
 
-
 /** Make the collection and schema available to other code. */
 export { ProfilesInterests, ProfileInterestSchema, profilesInterestsName };

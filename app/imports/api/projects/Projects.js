@@ -8,7 +8,10 @@ const projectsName = 'Projects';
 /** Define a Mongo collection to hold the data. */
 const Projects = new Mongo.Collection(projectsName);
 
-/** Define a schema to specify the structure of each document in the collection. */
+/**
+ * Define a schema to specify the structure of each document in the collection.
+ * Names must be unique.
+ */
 const ProjectSchema = new SimpleSchema({
   name: { type: String, index: true, unique: true },
   homepage: { type: String, optional: true },

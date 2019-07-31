@@ -8,7 +8,6 @@ import { ProfilesProjects } from '../../api/profiles/ProfilesProjects';
 import { ProfilesInterests } from '../../api/profiles/ProfilesInterests';
 import { Interests } from '../../api/interests/Interests';
 
-
 /* eslint-disable no-console */
 
 /** Define a user in the Meteor accounts package. This enables login. Username is the email address. */
@@ -19,12 +18,12 @@ function createUser(email, role) {
   }
 }
 
-/** Define an interest.  If the interest already exists, that's OK. */
+/** Define an interest.  Has no effect if interest already exists. */
 function addInterest(interest) {
   Interests.update({ name: interest }, { $set: { name: interest } }, { upsert: true });
 }
 
-/** Defines a new user and associated profile. Assumes user does not already exist. */
+/** Defines a new user and associated profile. Error if user already exists. */
 function addProfile({ firstName, lastName, bio, title, interests, projects, picture, email, role }) {
   console.log(`Defining profile ${email}`);
   // Define the user in the Meteor accounts package.
@@ -38,7 +37,7 @@ function addProfile({ firstName, lastName, bio, title, interests, projects, pict
   interests.map(interest => addInterest(interest));
 }
 
-/** Define a new project. Assumes project does not already exist.  */
+/** Define a new project. Error if project already exists.  */
 function addProject({ name, homepage, description, interests, picture }) {
   console.log(`Defining project ${name}`);
   Projects.insert({ name, homepage, description, picture });
@@ -47,7 +46,7 @@ function addProject({ name, homepage, description, interests, picture }) {
   interests.map(interest => addInterest(interest));
 }
 
-/** When running app, make sure to pass settings file to initialize the database if it's empty. */
+/** Initialize DB if it appears to be empty (i.e. no users defined.) */
 if (Meteor.users.find().count() === 0) {
   if (Meteor.settings.defaultProjects && Meteor.settings.defaultProfiles) {
     console.log('Creating the default profiles');

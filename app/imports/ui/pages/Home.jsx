@@ -33,7 +33,7 @@ const makeSchema = (allInterests, allProjects) => new SimpleSchema({
   'projects.$': { type: String, allowedValues: allProjects },
 });
 
-/** Renders the Page for adding a document. */
+/** Renders the Home Page: what appears after the user logs in. */
 class Home extends React.Component {
 
   /** On submit, insert the data. */

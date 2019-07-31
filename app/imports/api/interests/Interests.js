@@ -8,7 +8,10 @@ const interestsName = 'Interests';
 /** Define a Mongo collection to hold the data. */
 const Interests = new Mongo.Collection(interestsName);
 
-/** Define a schema to specify the structure of each document in the collection. */
+/**
+ * Define a schema to specify the structure of each document in the collection.
+ * Names must be unique.
+ * */
 const InterestSchema = new SimpleSchema({
   name: { type: String, index: true, unique: true },
 }, { tracker: Tracker });

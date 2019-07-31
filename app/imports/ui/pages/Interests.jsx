@@ -11,6 +11,7 @@ import { profilesProjectsName } from '../../api/profiles/ProfilesProjects';
 import { Projects, projectsName } from '../../api/projects/Projects';
 import { ProjectsInterests, projectsInterestsName } from '../../api/projects/ProjectsInterests';
 
+/** Returns the Profiles and Projects associated with the passed Interest. */
 function getInterestData(name) {
   const profiles = _.pluck(ProfilesInterests.find({ interest: name }).fetch(), 'profile');
   const profilePictures = profiles.map(profile => Profiles.findOne({ email: profile }).picture);
@@ -20,7 +21,7 @@ function getInterestData(name) {
   return _.extend({ }, { name, profiles: profilePictures, projects: projectPictures });
 }
 
-/** Component for layout out a Project Card. */
+/** Component for layout out an Interest Card. */
 const MakeCard = (props) => (
   <Card>
     <Card.Content>
@@ -33,12 +34,11 @@ const MakeCard = (props) => (
   </Card>
 );
 
-/** Properties */
 MakeCard.propTypes = {
   interest: PropTypes.object.isRequired,
 };
 
-/** Renders the Profile Collection as a set of Cards. */
+/** Renders the Interests as a set of Cards. */
 class InterestsPage extends React.Component {
 
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */

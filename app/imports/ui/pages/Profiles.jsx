@@ -9,6 +9,7 @@ import { ProfilesInterests, profilesInterestsName } from '../../api/profiles/Pro
 import { ProfilesProjects, profilesProjectsName } from '../../api/profiles/ProfilesProjects';
 import { Projects, projectsName } from '../../api/projects/Projects';
 
+/** Returns the Profile and associated Projects and Interests associated with the passed user email. */
 function getProfileData(email) {
   const data = Profiles.findOne({ email });
   const interests = _.pluck(ProfilesInterests.find({ profile: email }).fetch(), 'interest');
@@ -42,7 +43,6 @@ const MakeCard = (props) => (
   </Card>
 );
 
-/** Properties */
 MakeCard.propTypes = {
   profile: PropTypes.object.isRequired,
 };
@@ -70,7 +70,6 @@ class ProfilesPage extends React.Component {
   }
 }
 
-/** Require an array of Stuff documents in the props. */
 ProfilesPage.propTypes = {
   ready: PropTypes.bool.isRequired,
 };

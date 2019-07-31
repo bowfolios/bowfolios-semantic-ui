@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Image, Container, Header } from 'semantic-ui-react';
 
-/** A simple static component to render some text for the landing page. */
+/** Renders a color-blocked static landing page. */
 class Landing extends React.Component {
   render() {
     return (

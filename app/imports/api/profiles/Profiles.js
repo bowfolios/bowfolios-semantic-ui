@@ -8,7 +8,10 @@ const profilesName = 'Profiles';
 /** Define a Mongo collection to hold the data. */
 const Profiles = new Mongo.Collection(profilesName);
 
-/** Define a schema to specify the structure of each document in the collection. */
+/**
+ * Define a schema to specify the structure of each document in the collection.
+ * Emails must be unique.
+ * */
 const ProfileSchema = new SimpleSchema({
   email: { type: String, index: true, unique: true },
   firstName: { type: String, optional: true },
