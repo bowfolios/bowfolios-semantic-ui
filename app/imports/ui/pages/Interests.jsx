@@ -4,7 +4,7 @@ import { Container, Loader, Card, Image, Header } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
-import { interestName, Interests } from '../../api/interests/Interests';
+import { interestsName, Interests } from '../../api/interests/Interests';
 import { Profiles, profilesName } from '../../api/profiles/Profiles';
 import { ProfilesInterests, profilesInterestsName } from '../../api/profiles/ProfilesInterests';
 import { profilesProjectsName } from '../../api/profiles/ProfilesProjects';
@@ -71,7 +71,7 @@ export default withTracker(() => {
   const sub2 = Meteor.subscribe(projectsName);
   const sub3 = Meteor.subscribe(projectsInterestsName);
   const sub4 = Meteor.subscribe(profilesName);
-  const sub5 = Meteor.subscribe(interestName);
+  const sub5 = Meteor.subscribe(interestsName);
   const sub6 = Meteor.subscribe(profilesInterestsName);
   return {
     ready: sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready() && sub6.ready(),

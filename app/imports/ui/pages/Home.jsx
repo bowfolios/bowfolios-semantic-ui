@@ -12,7 +12,7 @@ import { _ } from 'meteor/underscore';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import MultiSelectField from '../forms/controllers/MultiSelectField';
-import { Interests, interestName } from '../../api/interests/Interests';
+import { Interests, interestsName } from '../../api/interests/Interests';
 import { Profiles, profilesName } from '../../api/profiles/Profiles';
 import { ProfilesInterests, profilesInterestsName } from '../../api/profiles/ProfilesInterests';
 import { ProfilesProjects, profilesProjectsName } from '../../api/profiles/ProfilesProjects';
@@ -100,7 +100,7 @@ Home.propTypes = {
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   // Ensure that minimongo is populated with all collections prior to running render().
-  const sub1 = Meteor.subscribe(interestName);
+  const sub1 = Meteor.subscribe(interestsName);
   const sub2 = Meteor.subscribe(profilesName);
   const sub3 = Meteor.subscribe(profilesInterestsName);
   const sub4 = Meteor.subscribe(profilesProjectsName);

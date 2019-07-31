@@ -12,41 +12,44 @@ class Landing extends React.Component {
                 Welcome to Bowfolios
               </Header>
               <Header style={{ paddingBottom: '20px', color: 'white' }} as='h3'>
-                Professional portfolios, projects, and networking for the UH Community
+                Profiles, projects, and interest areas for the UH Community
               </Header>
             </Container>
           </div>
           <div className='landing-white-background'>
-            <Grid container columns='equal' style={{ marginTop: '0', marginBottom: '0' }}>
-              <Grid.Column textAlign='right'>
-                <Image src="/images/logo.png" floated='right'/>
+              <Header style={{ color: '#376551' }} as='h2' textAlign='center'>Create and peruse profiles.</Header>
+            <Grid container stackable columns='equal' textAlign='center'>
+              <Grid.Column>
+                <Image src="/images/home-page.png"/>
               </Grid.Column>
-              <Grid.Column verticalAlign='middle'>
-                <Header style={{ color: '#376551' }} as='h2'>Create your portfolio.</Header>
-                <Header style={{ color: '#376551' }} as='h2'>Specify your interests and projects.</Header>
+              <Grid.Column>
+                <Image src="/images/profiles-page.png"/>
               </Grid.Column>
             </Grid>
           </div>
           <div className='landing-green-background'>
-            <Grid container columns='equal' style={{ marginTop: '0', marginBottom: '0' }}>
-              <Grid.Column textAlign='right'>
-                <Image src="/images/logo.png" floated='right'/>
+            <Header style={{ color: 'white' }} as='h2' textAlign='center'>Create and peruse projects.</Header>
+            <Grid container stackable columns='equal' textAlign='center'>
+              <Grid.Column>
+                <Image src="/images/add-project-page.png"/>
               </Grid.Column>
-              <Grid.Column verticalAlign='middle'>
-                <Header style={{ color: 'white' }} as='h2'>Publish your portfolio.</Header>
+              <Grid.Column>
+                <Image src="/images/projects-page.png"/>
               </Grid.Column>
             </Grid>
           </div>
           <div className='landing-white-background'>
-            <Grid container columns='equal' style={{ marginTop: '0', marginBottom: '0' }}>
-              <Grid.Column textAlign='right'>
-                <Image src="/images/logo.png" floated='right'/>
+            <Header style={{ color: '#376551' }} as='h2' textAlign='center'>Peruse and filter by interests.</Header>
+            <Grid container stackable columns='equal' textAlign='center'>
+              <Grid.Column>
+                <Image src="/images/interests-page.png"/>
               </Grid.Column>
-              <Grid.Column verticalAlign='middle'>
-                <Header style={{ color: '#376551' }} as='h2'>Find others with similar interests</Header>
+              <Grid.Column>
+                <Image src="/images/filter-page.png"/>
               </Grid.Column>
             </Grid>
           </div>
+
         </div>
 
     );

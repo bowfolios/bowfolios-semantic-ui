@@ -7,11 +7,13 @@
 .landing-green-background {
   background-color: #376551;
   color: white;
+  padding-top: 20px;
 }
 
 .landing-white-background {
   background-color: white;
   color: #376551;
+  padding-top: 20px;
 }
 
 .reset-margins {

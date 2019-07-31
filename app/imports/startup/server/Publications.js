@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 import { Stuffs } from '../../api/stuff/Stuff';
-import { interestName, Interests } from '../../api/interests/Interests';
+import { interestsName, Interests } from '../../api/interests/Interests';
 import { profilesName, Profiles } from '../../api/profiles/Profiles';
 import { ProfilesInterests, profilesInterestsName } from '../../api/profiles/ProfilesInterests';
 import { ProfilesProjects, profilesProjectsName } from '../../api/profiles/ProfilesProjects';
@@ -26,7 +26,7 @@ Meteor.publish('StuffAdmin', function publish() {
 });
 
 /** Define a publication to publish all interests. */
-Meteor.publish(interestName, () => Interests.find());
+Meteor.publish(interestsName, () => Interests.find());
 /** Define a publication to publish all profiles. */
 Meteor.publish(profilesName, () => Profiles.find());
 /** Define a publication to publish this collection. */

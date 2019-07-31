@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import SubmitField from 'uniforms-semantic/SubmitField';
 import AutoForm from 'uniforms-semantic/AutoForm';
-import { Interests, interestName } from '../../api/interests/Interests';
+import { Interests, interestsName } from '../../api/interests/Interests';
 import { Profiles, profilesName } from '../../api/profiles/Profiles';
 import { ProfilesInterests, profilesInterestsName } from '../../api/profiles/ProfilesInterests';
 import { ProfilesProjects, profilesProjectsName } from '../../api/profiles/ProfilesProjects';
@@ -109,7 +109,7 @@ export default withTracker(() => {
   const sub2 = Meteor.subscribe(profilesInterestsName);
   const sub3 = Meteor.subscribe(profilesProjectsName);
   const sub4 = Meteor.subscribe(projectsName);
-  const sub5 = Meteor.subscribe(interestName);
+  const sub5 = Meteor.subscribe(interestsName);
   return {
     ready: sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready(),
   };
