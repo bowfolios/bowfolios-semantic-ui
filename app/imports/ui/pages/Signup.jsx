@@ -1,16 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Link, Redirect } from 'react-router-dom';
 import { Container, Form, Grid, Header, Message, Segment } from 'semantic-ui-react';
 import { Accounts } from 'meteor/accounts-base';
+import { Profiles } from '../../api/profiles/Profiles';
 
 /**
- * Signup component is similar to signin component, but we attempt to create a new user instead.
+ * Signup component is similar to signin component, but we create a new user instead.
  */
-export default class Signup extends React.Component {
+class Signup extends React.Component {
   /** Initialize state fields. */
   constructor(props) {
     super(props);
-    this.state = { email: '', password: '', error: '' };
+    this.state = { email: '', password: '', error: '', redirectToReferer: false };
     // Ensure that 'this' is bound to this component in these two functions.
     // https://medium.freecodecamp.org/react-binding-patterns-5-approaches-for-handling-this-92c651b5af56
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,20 +24,31 @@ export default class Signup extends React.Component {
     this.setState({ [name]: value });
   }
 
-  /** Handle Signup submission using Meteor's account mechanism. */
+  /** Handle Signup submission. Create user account and a profile entry, then redirect to the home page. */
   handleSubmit() {
     const { email, password } = this.state;
     Accounts.createUser({ email, username: email, password }, (err) => {
       if (err) {
         this.setState({ error: err.reason });
       } else {
-        // browserHistory.push('/login');
+        Profiles.insert({ email }, (err2) => {
+          if (err2) {
+            this.setState({ error: err2.reason });
+          } else {
+            this.setState({ error: '', redirectToReferer: true });
+          }
+        });
       }
     });
   }
 
   /** Display the signup form. */
   render() {
+    const { from } = this.props.location.state || { from: { pathname: '/home' } };
+    // if correct authentication, redirect to from: page instead of signup screen
+    if (this.state.redirectToReferer) {
+      return <Redirect to={from}/>;
+    }
     return (
         <Container>
           <Grid textAlign="center" verticalAlign="middle" centered columns={2}>
@@ -84,3 +97,10 @@ export default class Signup extends React.Component {
     );
   }
 }
+
+/** Ensure that the React Router location object is available in case we need to redirect. */
+Signup.propTypes = {
+  location: PropTypes.object,
+};
+
+export default Signup;

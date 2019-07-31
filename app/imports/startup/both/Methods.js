@@ -43,5 +43,4 @@ Meteor.methods({
   },
 });
 
-
 export { updateProfileMethod, addProjectMethod };
