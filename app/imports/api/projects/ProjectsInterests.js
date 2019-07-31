@@ -1,5 +1,4 @@
 import { Mongo } from 'meteor/mongo';
-import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import { Tracker } from 'meteor/tracker';
 
@@ -17,7 +16,6 @@ const ProjectInterestSchema = new SimpleSchema({
 
 /** Attach this schema to the collection. */
 ProjectsInterests.attachSchema(ProjectInterestSchema);
-
 
 /** Make the collection and schema available to other code. */
 export { ProjectsInterests, ProjectInterestSchema, projectsInterestsName };

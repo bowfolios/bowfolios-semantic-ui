@@ -4,12 +4,10 @@ import { Container, Loader, Card, Image, Label } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
-import { interestName } from '../../api/interests/Interests';
 import { Profiles, profilesName } from '../../api/profiles/Profiles';
-import { profilesInterestsName } from '../../api/profiles/ProfilesInterests';
 import { ProfilesProjects, profilesProjectsName } from '../../api/profiles/ProfilesProjects';
 import { Projects, projectsName } from '../../api/projects/Projects';
-import { ProjectsInterests } from '../../api/projects/ProjectsInterests';
+import { ProjectsInterests, projectsInterestsName } from '../../api/projects/ProjectsInterests';
 
 function getProjectData(name) {
   const data = Projects.findOne({ name });
@@ -77,12 +75,11 @@ ProjectsPage.propTypes = {
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   // Ensure that minimongo is populated with all collections prior to running render().
-  const sub1 = Meteor.subscribe(interestName);
-  const sub2 = Meteor.subscribe(profilesName);
-  const sub3 = Meteor.subscribe(profilesInterestsName);
-  const sub4 = Meteor.subscribe(profilesProjectsName);
-  const sub5 = Meteor.subscribe(projectsName);
+  const sub1 = Meteor.subscribe(profilesProjectsName);
+  const sub2 = Meteor.subscribe(projectsName);
+  const sub3 = Meteor.subscribe(projectsInterestsName);
+  const sub4 = Meteor.subscribe(profilesName);
   return {
-    ready: sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready(),
+    ready: sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready(),
   };
 })(ProjectsPage);

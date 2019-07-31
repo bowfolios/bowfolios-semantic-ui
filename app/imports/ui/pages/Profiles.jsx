@@ -37,7 +37,7 @@ const MakeCard = (props) => (
     </Card.Content>
     <Card.Content extra>
       <Header as='h5'>Projects</Header>
-      {_.map(props.profile.projects, (project, index) => <Image key={index} size='tiny' src={project}/>)}
+      {_.map(props.profile.projects, (project, index) => <Image key={index} size='mini' src={project}/>)}
     </Card.Content>
   </Card>
 );

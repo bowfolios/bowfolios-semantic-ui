@@ -37,4 +37,3 @@ Meteor.publish(profilesProjectsName, () => ProfilesProjects.find());
 Meteor.publish(projectsName, () => Projects.find());
 /** Define a publication to publish this collection. */
 Meteor.publish(projectsInterestsName, () => ProjectsInterests.find());
-
