@@ -17,7 +17,7 @@ class Landing extends React.Component {
             </Container>
           </div>
           <div className='landing-white-background'>
-              <Header style={{ color: '#376551' }} as='h2' textAlign='center'>Create and peruse profiles.</Header>
+              <Header style={{ color: '#376551' }} as='h2' textAlign='center'>Start by making your profile....</Header>
             <Grid container stackable columns='equal' textAlign='center'>
               <Grid.Column>
                 <Image src="/images/home-page.png"/>
@@ -28,7 +28,7 @@ class Landing extends React.Component {
             </Grid>
           </div>
           <div className='landing-green-background'>
-            <Header style={{ color: 'white' }} as='h2' textAlign='center'>Create and peruse projects.</Header>
+            <Header style={{ color: 'white' }} as='h2' textAlign='center'>...then add your projects</Header>
             <Grid container stackable columns='equal' textAlign='center'>
               <Grid.Column>
                 <Image src="/images/add-project-page.png"/>
@@ -39,7 +39,9 @@ class Landing extends React.Component {
             </Grid>
           </div>
           <div className='landing-white-background'>
-            <Header style={{ color: '#376551' }} as='h2' textAlign='center'>Peruse and filter by interests.</Header>
+            <Header style={{ color: '#376551' }} as='h2' textAlign='center'>
+              Connect to people and projects with shared interests!
+            </Header>
             <Grid container stackable columns='equal' textAlign='center'>
               <Grid.Column>
                 <Image src="/images/interests-page.png"/>
