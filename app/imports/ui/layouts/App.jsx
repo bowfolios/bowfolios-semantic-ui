@@ -11,6 +11,7 @@ import Home from '../pages/Home';
 import Profiles from '../pages/Profiles';
 import AddProject from '../pages/AddProject';
 import Projects from '../pages/Projects';
+import Interests from '../pages/Interests';
 import ListStuff from '../pages/ListStuff';
 import ListStuffAdmin from '../pages/ListStuffAdmin';
 import AddStuff from '../pages/AddStuff';
@@ -34,6 +35,7 @@ class App extends React.Component {
               <Route path="/profiles" component={Profiles}/>
               <Route path="/addproject" component={AddProject}/>
               <Route path="/projects" component={Projects}/>
+              <Route path="/interests" component={Interests}/>
               <Route path="/signin" component={Signin}/>
               <Route path="/signup" component={Signup}/>
               <ProtectedRoute path="/list" component={ListStuff}/>
