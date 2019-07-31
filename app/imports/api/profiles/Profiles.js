@@ -11,7 +11,7 @@ const Profiles = new Mongo.Collection(profilesName);
 
 /** Define a schema to specify the structure of each document in the collection. */
 const ProfileSchema = new SimpleSchema({
-  email: { type: String },
+  email: { type: String, index: true, unique: true },
   firstName: { type: String, optional: true },
   lastName: { type: String, optional: true },
   bio: { type: String, optional: true },
@@ -21,11 +21,6 @@ const ProfileSchema = new SimpleSchema({
 
 /** Attach this schema to the collection. */
 Profiles.attachSchema(ProfileSchema);
-
-/** Guarantee that the email field is unique by making it an index in Mongo. */
-if (Meteor.isServer) {
-  Profiles._ensureIndex({ email: 1 });
-}
 
 /** Make the collection and schema available to other code. */
 export { Profiles, ProfileSchema, profilesName };

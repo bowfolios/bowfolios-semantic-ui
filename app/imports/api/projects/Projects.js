@@ -11,7 +11,7 @@ const Projects = new Mongo.Collection(projectsName);
 
 /** Define a schema to specify the structure of each document in the collection. */
 const ProjectSchema = new SimpleSchema({
-  name: String,
+  name: { type: String, index: true, unique: true },
   homepage: { type: String, optional: true },
   description: { type: String, optional: true },
   picture: { type: String, optional: true },
@@ -19,11 +19,6 @@ const ProjectSchema = new SimpleSchema({
 
 /** Attach this schema to the collection. */
 Projects.attachSchema(ProjectSchema);
-
-/** Guarantee that the name field is unique by making it an index in Mongo. */
-if (Meteor.isServer) {
-  Projects._ensureIndex({ name: 1 });
-}
 
 /** Make the collection and schema available to other code. */
 export { Projects, ProjectSchema, projectsName };

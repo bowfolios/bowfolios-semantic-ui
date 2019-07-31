@@ -1,36 +1,24 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Container, Loader, Card, Image, Label } from 'semantic-ui-react';
-import { Stuffs } from '/imports/api/stuff/Stuff';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
+import { interestName } from '../../api/interests/Interests';
+import { Profiles, profilesName } from '../../api/profiles/Profiles';
+import { profilesInterestsName } from '../../api/profiles/ProfilesInterests';
+import { ProfilesProjects, profilesProjectsName } from '../../api/profiles/ProfilesProjects';
+import { Projects, projectsName } from '../../api/projects/Projects';
+import { ProjectsInterests } from '../../api/projects/ProjectsInterests';
 
-const projectData = [
-  {
-    name: 'Open Power Quality', description:
-      'Open source hardware and software for distributed power quality data collection, analysis, and visualization.',
-    interests: ['Software Engineering', 'Renewable Energy'],
-    participants: ['https://philipmjohnson.github.io/images/philip2.jpeg',
-      'https://sergey-negrashov.github.io/images/serge.jpg', 'https://anthonyjchriste.github.io/images/me.png'],
-    picture: 'https://avatars0.githubusercontent.com/u/4641939',
-  },
-  {
-    name: 'WRENCH', description:
-      'WRENCH is an open-source library for developing simulators for large-scale scientific computation',
-    interests: ['Distributed and parallel computing'],
-    participants: ['http://www.ics.hawaii.edu/wp-content/uploads/2013/08/Henri_Casanova1.jpg'],
-    picture: 'https://wrench-project.org/images/logo-vertical.png',
-  },
-  {
-    name: 'Cyber Canoe', description:
-      'Software for Unity projects involving stereoscopic resolution driven by 9 PCs with a GeForce 980 graphics card.',
-    interests: ['Unity', 'Visualization'],
-    participants: ['http://www.ics.hawaii.edu/wp-content/uploads/2013/08/Jason_Leigh-2014.jpg'],
-    picture: 'http://lava.manoa.hawaii.edu/wp-content/uploads/2016/07/CC-logo-small.png',
-  },
-
-];
+function getProjectData(name) {
+  const data = Projects.findOne({ name });
+  const interests = _.pluck(ProjectsInterests.find({ project: name }).fetch(), 'interest');
+  const profiles = _.pluck(ProfilesProjects.find({ project: name }).fetch(), 'profile');
+  const profilePictures = profiles.map(profile => Profiles.findOne({ email: profile }).picture);
+  // console.log(_.extend({ }, data, { interests, projects: projectPictures }));
+  return _.extend({ }, data, { interests, participants: profilePictures });
+}
 
 /** Component for layout out a Project Card. */
 const MakeCard = (props) => (
@@ -61,7 +49,7 @@ MakeCard.propTypes = {
 };
 
 /** Renders the Profile Collection as a set of Cards. */
-class Projects extends React.Component {
+class ProjectsPage extends React.Component {
 
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
   render() {
@@ -70,6 +58,8 @@ class Projects extends React.Component {
 
   /** Render the page once subscriptions have been received. */
   renderPage() {
+    const projects = _.pluck(Projects.find().fetch(), 'name');
+    const projectData = projects.map(project => getProjectData(project));
     return (
       <Container>
         <Card.Group>
@@ -80,18 +70,19 @@ class Projects extends React.Component {
   }
 }
 
-/** Require an array of Stuff documents in the props. */
-Projects.propTypes = {
-  stuffs: PropTypes.array.isRequired,
+ProjectsPage.propTypes = {
   ready: PropTypes.bool.isRequired,
 };
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
-  // Get access to Stuff documents.
-  const subscription = Meteor.subscribe('Stuff');
+  // Ensure that minimongo is populated with all collections prior to running render().
+  const sub1 = Meteor.subscribe(interestName);
+  const sub2 = Meteor.subscribe(profilesName);
+  const sub3 = Meteor.subscribe(profilesInterestsName);
+  const sub4 = Meteor.subscribe(profilesProjectsName);
+  const sub5 = Meteor.subscribe(projectsName);
   return {
-    stuffs: Stuffs.find({}).fetch(),
-    ready: subscription.ready(),
+    ready: sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready(),
   };
-})(Projects);
+})(ProjectsPage);

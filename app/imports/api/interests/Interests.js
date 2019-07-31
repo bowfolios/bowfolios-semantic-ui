@@ -11,17 +11,11 @@ const Interests = new Mongo.Collection(interestName);
 
 /** Define a schema to specify the structure of each document in the collection. */
 const InterestSchema = new SimpleSchema({
-  name: { type: String },
+  name: { type: String, index: true, unique: true },
 }, { tracker: Tracker });
 
 /** Attach this schema to the collection. */
 Interests.attachSchema(InterestSchema);
-
-/** Guarantee that the name field is unique by making it an index in Mongo. */
-if (Meteor.isServer) {
-  Interests._ensureIndex({ name: 1 });
-}
-
 
 /** Make the collection and schema available to other code. */
 export { Interests, InterestSchema, interestName };
