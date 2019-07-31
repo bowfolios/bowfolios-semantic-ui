@@ -11,6 +11,7 @@ import Home from '../pages/Home';
 import Profiles from '../pages/Profiles';
 import AddProject from '../pages/AddProject';
 import Projects from '../pages/Projects';
+import Filter from '../pages/Filter';
 import Interests from '../pages/Interests';
 import ListStuff from '../pages/ListStuff';
 import ListStuffAdmin from '../pages/ListStuffAdmin';
@@ -28,14 +29,15 @@ class App extends React.Component {
       <Router>
         <div>
           <NavBar/>
-          <div style={{ paddingTop: '20px', paddingBottom: '20px' }}>
+          <div style={{ paddingTop: '20px', paddingBottom: '30px' }}>
             <Switch>
               <Route exact path="/" component={Landing}/>
-              <Route path="/home" component={Home}/>
+              <ProtectedRoute path="/home" component={Home}/>
               <Route path="/profiles" component={Profiles}/>
-              <Route path="/addproject" component={AddProject}/>
               <Route path="/projects" component={Projects}/>
               <Route path="/interests" component={Interests}/>
+              <ProtectedRoute path="/addproject" component={AddProject}/>
+              <ProtectedRoute path="/filter" component={Filter}/>
               <Route path="/signin" component={Signin}/>
               <Route path="/signup" component={Signup}/>
               <ProtectedRoute path="/list" component={ListStuff}/>
