@@ -80,7 +80,7 @@ class Filter extends React.Component {
     const allInterests = _.pluck(Interests.find().fetch(), 'name');
     const formSchema = makeSchema(allInterests);
     const emails = _.pluck(ProfilesInterests.find({ interest: { $in: this.state.interests } }).fetch(), 'profile');
-    const profileData = emails.map(email => getProfileData(email));
+    const profileData = _.uniq(emails).map(email => getProfileData(email));
     return (
       <Container>
         <AutoForm schema={formSchema} onSubmit={data => this.submit(data)} >
