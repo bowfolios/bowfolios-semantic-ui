@@ -5,8 +5,7 @@ import { Container, Loader, Card, Image, Label, Header, Segment } from 'semantic
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
-import SubmitField from 'uniforms-semantic/SubmitField';
-import AutoForm from 'uniforms-semantic/AutoForm';
+import { AutoForm, SubmitField } from 'uniforms-semantic';
 import { Interests, interestsName } from '../../api/interests/Interests';
 import { Profiles, profilesName } from '../../api/profiles/Profiles';
 import { ProfilesInterests, profilesInterestsName } from '../../api/profiles/ProfilesInterests';
