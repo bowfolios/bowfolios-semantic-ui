@@ -1,0 +1,30 @@
+{
+  "profiles": [
+    {
+      "firstName": "Peter",
+      "lastName": "Leong",
+      "bio": "I am a professor of Educational Technology",
+      "title": "Professor",
+      "interests": [
+        "Online Learning"
+      ],
+      "projects":[
+        "UH Online",
+        "RadGrad"
+      ],
+      "picture": "https://www.radgrad.org/img/people/leong.jpg",
+      "email": "peterleo@hawaii.edu"
+    }
+  ],
+  "projects": [
+    {
+      "name": "UH Online",
+      "homepage": "https://www.uhonline.hawaii.edu/",
+      "description": "Online learning opportunities at the University of Hawaii.",
+      "interests": [
+        "Online Learning"
+      ],
+      "picture": "http://www.hawaii.edu/wp/wp-content/uploads/2015/12/system-seal.jpg"
+    }
+  ]
+}
