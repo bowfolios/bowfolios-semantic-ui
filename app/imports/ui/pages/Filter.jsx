@@ -1,4 +1,5 @@
 import React from 'react';
+import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import { Container, Loader, Card, Image, Label, Header, Segment } from 'semantic-ui-react';
@@ -56,7 +57,6 @@ MakeCard.propTypes = {
   profile: PropTypes.object.isRequired,
 };
 
-
 /** Renders the Profile Collection as a set of Cards. */
 class Filter extends React.Component {
 
@@ -78,11 +78,12 @@ class Filter extends React.Component {
   renderPage() {
     const allInterests = _.pluck(Interests.find().fetch(), 'name');
     const formSchema = makeSchema(allInterests);
+    const bridge = new SimpleSchema2Bridge(formSchema);
     const emails = _.pluck(ProfilesInterests.find({ interest: { $in: this.state.interests } }).fetch(), 'profile');
     const profileData = _.uniq(emails).map(email => getProfileData(email));
     return (
       <Container>
-        <AutoForm schema={formSchema} onSubmit={data => this.submit(data)} >
+        <AutoForm schema={bridge} onSubmit={data => this.submit(data)} >
           <Segment>
             <MultiSelectField name='interests' showInlineError={true} placeholder={'Interests'}/>
             <SubmitField value='Submit'/>

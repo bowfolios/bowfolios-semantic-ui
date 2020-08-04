@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, Segment, Header, Form, Loader } from 'semantic-ui-react';
 import { AutoForm, TextField, LongTextField, SubmitField } from 'uniforms-semantic';
 import swal from 'sweetalert';
-import 'uniforms-bridge-simple-schema-2'; // required for Uniforms
+import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
@@ -56,6 +56,7 @@ class Home extends React.Component {
     const allInterests = _.pluck(Interests.find().fetch(), 'name');
     const allProjects = _.pluck(Projects.find().fetch(), 'name');
     const formSchema = makeSchema(allInterests, allProjects);
+    const bridge = new SimpleSchema2Bridge(formSchema);
     // Now create the model with all the user information.
     const projects = _.pluck(ProfilesProjects.find({ profile: email }).fetch(), 'project');
     const interests = _.pluck(ProfilesInterests.find({ profile: email }).fetch(), 'interest');
@@ -65,7 +66,7 @@ class Home extends React.Component {
       <Grid container centered>
         <Grid.Column>
           <Header as="h2" textAlign="center">Your Profile</Header>
-          <AutoForm model={model} schema={formSchema} onSubmit={data => this.submit(data)}>
+          <AutoForm model={model} schema={bridge} onSubmit={data => this.submit(data)}>
             <Segment>
               <Form.Group widths={'equal'}>
                 <TextField name='firstName' showInlineError={true} placeholder={'First Name'}/>

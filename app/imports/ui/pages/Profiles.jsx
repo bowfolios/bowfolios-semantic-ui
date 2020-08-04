@@ -47,7 +47,6 @@ MakeCard.propTypes = {
   profile: PropTypes.object.isRequired,
 };
 
-
 /** Renders the Profile Collection as a set of Cards. */
 class ProfilesPage extends React.Component {
 

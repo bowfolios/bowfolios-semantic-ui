@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, Segment, Header, Form } from 'semantic-ui-react';
 import { AutoForm, TextField, LongTextField, SubmitField, ErrorsField } from 'uniforms-semantic';
 import swal from 'sweetalert';
-import 'uniforms-bridge-simple-schema-2'; // required for Uniforms
+import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -48,11 +48,12 @@ class AddProject extends React.Component {
     const allInterests = _.pluck(Interests.find().fetch(), 'name');
     const allParticipants = _.pluck(Profiles.find().fetch(), 'email');
     const formSchema = makeSchema(allInterests, allParticipants);
+    const bridge = new SimpleSchema2Bridge(formSchema);
     return (
         <Grid container centered>
           <Grid.Column>
             <Header as="h2" textAlign="center">Add Project</Header>
-            <AutoForm ref={ref => { fRef = ref; }} schema={formSchema} onSubmit={data => this.submit(data, fRef)} >
+            <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.submit(data, fRef)} >
               <Segment>
                 <Form.Group widths={'equal'}>
                   <TextField name='name' showInlineError={true} placeholder='Project name'/>

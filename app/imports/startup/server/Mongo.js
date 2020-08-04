@@ -14,6 +14,7 @@ import { Interests } from '../../api/interests/Interests';
 function createUser(email, role) {
   const userID = Accounts.createUser({ username: email, email, password: 'foo' });
   if (role === 'admin') {
+    Roles.createRole(role, { unlessExists: true });
     Roles.addUsersToRoles(userID, 'admin');
   }
 }

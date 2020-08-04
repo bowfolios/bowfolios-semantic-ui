@@ -1,13 +1,12 @@
 import React from 'react';
 import classnames from 'classnames';
-import connectField from 'uniforms/connectField';
-import filterDOMProps from 'uniforms/filterDOMProps';
+import { connectField, filterDOMProps } from 'uniforms';
 import { Dropdown } from 'semantic-ui-react';
 import { _ } from 'meteor/underscore';
 
 /**
  * Provide Semantic UI multi-select functionality.
- * Adapted from https://github.com/vazco/uniforms/blob/master/packages/uniforms-semantic/src/SelectField.js
+ * Adapted from https://github.com/vazco/uniforms/blob/master/packages/uniforms-semantic/src/SelectField.tsx
  *
  * The MIT License (MIT)
 
@@ -80,5 +79,4 @@ const MultiSelect = ({
   </div>
 );
 
-
-export default connectField(MultiSelect);
+export default connectField(MultiSelect, { kind: 'leaf' });
