@@ -21,7 +21,7 @@ function createUser(email, role) {
 
 /** Define an interest.  Has no effect if interest already exists. */
 function addInterest(interest) {
-  Interests.update({ name: interest }, { $set: { name: interest } }, { upsert: true });
+  Interests.collection.update({ name: interest }, { $set: { name: interest } }, { upsert: true });
 }
 
 /** Defines a new user and associated profile. Error if user already exists. */
@@ -30,10 +30,10 @@ function addProfile({ firstName, lastName, bio, title, interests, projects, pict
   // Define the user in the Meteor accounts package.
   createUser(email, role);
   // Create the profile.
-  Profiles.insert({ firstName, lastName, bio, title, picture, email });
+  Profiles.collection.insert({ firstName, lastName, bio, title, picture, email });
   // Add interests and projects.
-  interests.map(interest => ProfilesInterests.insert({ profile: email, interest }));
-  projects.map(project => ProfilesProjects.insert({ profile: email, project }));
+  interests.map(interest => ProfilesInterests.collection.insert({ profile: email, interest }));
+  projects.map(project => ProfilesProjects.collection.insert({ profile: email, project }));
   // Make sure interests are defined in the Interests collection if they weren't already.
   interests.map(interest => addInterest(interest));
 }
@@ -41,8 +41,8 @@ function addProfile({ firstName, lastName, bio, title, interests, projects, pict
 /** Define a new project. Error if project already exists.  */
 function addProject({ name, homepage, description, interests, picture }) {
   console.log(`Defining project ${name}`);
-  Projects.insert({ name, homepage, description, picture });
-  interests.map(interest => ProjectsInterests.insert({ project: name, interest }));
+  Projects.collection.insert({ name, homepage, description, picture });
+  interests.map(interest => ProjectsInterests.collection.insert({ project: name, interest }));
   // Make sure interests are defined in the Interests collection if they weren't already.
   interests.map(interest => addInterest(interest));
 }

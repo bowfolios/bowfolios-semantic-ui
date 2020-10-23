@@ -9,11 +9,11 @@ import { _ } from 'meteor/underscore';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import MultiSelectField from '../forms/controllers/MultiSelectField';
-import { Interests, interestsName } from '../../api/interests/Interests';
-import { Profiles, profilesName } from '../../api/profiles/Profiles';
-import { ProfilesInterests, profilesInterestsName } from '../../api/profiles/ProfilesInterests';
-import { ProfilesProjects, profilesProjectsName } from '../../api/profiles/ProfilesProjects';
-import { Projects, projectsName } from '../../api/projects/Projects';
+import { Interests } from '../../api/interests/Interests';
+import { Profiles } from '../../api/profiles/Profiles';
+import { ProfilesInterests } from '../../api/profiles/ProfilesInterests';
+import { ProfilesProjects } from '../../api/profiles/ProfilesProjects';
+import { Projects } from '../../api/projects/Projects';
 import { updateProfileMethod } from '../../startup/both/Methods';
 
 /** Create a schema to specify the structure of the data to appear in the form. */
@@ -53,14 +53,14 @@ class Home extends React.Component {
   renderPage() {
     const email = Meteor.user().username;
     // Create the form schema for uniforms. Need to determine all interests and projects for muliselect list.
-    const allInterests = _.pluck(Interests.find().fetch(), 'name');
-    const allProjects = _.pluck(Projects.find().fetch(), 'name');
+    const allInterests = _.pluck(Interests.collection.find().fetch(), 'name');
+    const allProjects = _.pluck(Projects.collection.find().fetch(), 'name');
     const formSchema = makeSchema(allInterests, allProjects);
     const bridge = new SimpleSchema2Bridge(formSchema);
     // Now create the model with all the user information.
-    const projects = _.pluck(ProfilesProjects.find({ profile: email }).fetch(), 'project');
-    const interests = _.pluck(ProfilesInterests.find({ profile: email }).fetch(), 'interest');
-    const profile = Profiles.findOne({ email });
+    const projects = _.pluck(ProfilesProjects.collection.find({ profile: email }).fetch(), 'project');
+    const interests = _.pluck(ProfilesInterests.collection.find({ profile: email }).fetch(), 'interest');
+    const profile = Profiles.collection.findOne({ email });
     const model = _.extend({}, profile, { interests, projects });
     return (
       <Grid container centered>
@@ -98,11 +98,11 @@ Home.propTypes = {
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   // Ensure that minimongo is populated with all collections prior to running render().
-  const sub1 = Meteor.subscribe(interestsName);
-  const sub2 = Meteor.subscribe(profilesName);
-  const sub3 = Meteor.subscribe(profilesInterestsName);
-  const sub4 = Meteor.subscribe(profilesProjectsName);
-  const sub5 = Meteor.subscribe(projectsName);
+  const sub1 = Meteor.subscribe(Interests.userPublicationName);
+  const sub2 = Meteor.subscribe(Profiles.userPublicationName);
+  const sub3 = Meteor.subscribe(ProfilesInterests.userPublicationName);
+  const sub4 = Meteor.subscribe(ProfilesProjects.userPublicationName);
+  const sub5 = Meteor.subscribe(Projects.userPublicationName);
   return {
     ready: sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready(),
   };

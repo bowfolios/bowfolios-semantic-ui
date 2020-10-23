@@ -2,20 +2,24 @@ import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 import { Tracker } from 'meteor/tracker';
 
-/** The name of the collection and the global publication. */
-const projectsInterestsName = 'ProjectsInterests';
+/** Encapsulates state and variable values for this collection. */
+class ProjectsInterestsCollection {
+  constructor() {
+    // The name of this collection.
+    this.name = 'ProjectsInterestsCollection';
+    // Define the Mongo collection.
+    this.collection = new Mongo.Collection(this.name);
+    // Define the structure of each document in the collection.
+    this.schema = new SimpleSchema({
+      project: String,
+      interest: String,
+    }, { tracker: Tracker });
+    // Ensure collection documents obey schema.
+    this.collection.attachSchema(this.schema);
+    // Define names for publications and subscriptions
+    this.userPublicationName = `${this.name}.publication.user`;
+    this.adminPublicationName = `${this.name}.publication.admin`;
+  }
+}
 
-/** Define a Mongo collection to hold the data. */
-const ProjectsInterests = new Mongo.Collection(projectsInterestsName);
-
-/** Define a schema to specify the structure of each document in the collection. */
-const ProjectInterestSchema = new SimpleSchema({
-  project: String,
-  interest: String,
-}, { tracker: Tracker });
-
-/** Attach this schema to the collection. */
-ProjectsInterests.attachSchema(ProjectInterestSchema);
-
-/** Make the collection and schema available to other code. */
-export { ProjectsInterests, ProjectInterestSchema, projectsInterestsName };
+export const ProjectsInterests = new ProjectsInterestsCollection();

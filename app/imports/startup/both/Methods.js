@@ -35,11 +35,11 @@ const updateProfileMethod = 'Profiles.update';
  */
 Meteor.methods({
   'Profiles.update'({ email, firstName, lastName, bio, title, picture, interests, projects }) {
-    Profiles.update({ email }, { $set: { email, firstName, lastName, bio, title, picture } });
-    ProfilesInterests.remove({ profile: email });
-    ProfilesProjects.remove({ profile: email });
-    interests.map((interest) => ProfilesInterests.insert({ profile: email, interest }));
-    projects.map((project) => ProfilesProjects.insert({ profile: email, project }));
+    Profiles.collection.update({ email }, { $set: { email, firstName, lastName, bio, title, picture } });
+    ProfilesInterests.collection.remove({ profile: email });
+    ProfilesProjects.collection.remove({ profile: email });
+    interests.map((interest) => ProfilesInterests.collection.insert({ profile: email, interest }));
+    projects.map((project) => ProfilesProjects.collection.insert({ profile: email, project }));
   },
 });
 
@@ -48,11 +48,11 @@ const addProjectMethod = 'Projects.add';
 /** Creates a new project in the Projects collection, and also updates ProfilesProjects and ProjectsInterests. */
 Meteor.methods({
   'Projects.add'({ name, description, picture, interests, participants, homepage }) {
-    Projects.insert({ name, description, picture, homepage });
-    ProfilesProjects.remove({ project: name });
-    ProjectsInterests.remove({ project: name });
-    interests.map((interest) => ProjectsInterests.insert({ project: name, interest }));
-    participants.map((participant) => ProfilesProjects.insert({ project: name, profile: participant }));
+    Projects.collection.insert({ name, description, picture, homepage });
+    ProfilesProjects.collection.remove({ project: name });
+    ProjectsInterests.collection.remove({ project: name });
+    interests.map((interest) => ProjectsInterests.collection.insert({ project: name, interest }));
+    participants.map((participant) => ProfilesProjects.collection.insert({ project: name, profile: participant }));
   },
 });
 

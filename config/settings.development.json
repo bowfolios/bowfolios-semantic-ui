@@ -50,7 +50,7 @@
       "firstName": "Anthony",
       "lastName": "Christe",
       "bio": "I enjoy competitive bicycle racing.",
-      "title": "Ph.D. Student",
+      "title": "Ph.D. (2020))",
       "interests": [
         "AI",
         "Distributed Computing"
@@ -79,7 +79,7 @@
       "firstName": "Serge",
       "lastName": "Negrashov",
       "bio": "Most weekends, you can find me on my 8 foot dinghy.",
-      "title": "Ph.D. Student",
+      "title": "Ph.D. (2020)",
       "interests": [
         "Scalable IP Networks"
       ],
