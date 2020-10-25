@@ -82,7 +82,7 @@ class Filter extends React.Component {
     const emails = _.pluck(ProfilesInterests.collection.find({ interest: { $in: this.state.interests } }).fetch(), 'profile');
     const profileData = _.uniq(emails).map(email => getProfileData(email));
     return (
-      <Container>
+      <Container id="filter-page">
         <AutoForm schema={bridge} onSubmit={data => this.submit(data)} >
           <Segment>
             <MultiSelectField name='interests' showInlineError={true} placeholder={'Interests'}/>

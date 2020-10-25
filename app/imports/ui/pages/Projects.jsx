@@ -58,7 +58,7 @@ class ProjectsPage extends React.Component {
     const projects = _.pluck(Projects.collection.find().fetch(), 'name');
     const projectData = projects.map(project => getProjectData(project));
     return (
-      <Container>
+      <Container id="projects-page">
         <Card.Group>
           {_.map(projectData, (project, index) => <MakeCard key={index} project={project}/>)}
         </Card.Group>

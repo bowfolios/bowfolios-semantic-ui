@@ -63,7 +63,7 @@ class Home extends React.Component {
     const profile = Profiles.collection.findOne({ email });
     const model = _.extend({}, profile, { interests, projects });
     return (
-      <Grid container centered>
+      <Grid id="landing-page" container centered>
         <Grid.Column>
           <Header as="h2" textAlign="center">Your Profile</Header>
           <AutoForm model={model} schema={bridge} onSubmit={data => this.submit(data)}>
