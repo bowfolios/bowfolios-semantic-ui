@@ -63,17 +63,17 @@ class Home extends React.Component {
     const profile = Profiles.collection.findOne({ email });
     const model = _.extend({}, profile, { interests, projects });
     return (
-      <Grid id="landing-page" container centered>
+      <Grid id="home-page" container centered>
         <Grid.Column>
           <Header as="h2" textAlign="center">Your Profile</Header>
           <AutoForm model={model} schema={bridge} onSubmit={data => this.submit(data)}>
             <Segment>
               <Form.Group widths={'equal'}>
-                <TextField name='firstName' showInlineError={true} placeholder={'First Name'}/>
-                <TextField name='lastName' showInlineError={true} placeholder={'Last Name'}/>
+                <TextField id='firstName' name='firstName' showInlineError={true} placeholder={'First Name'}/>
+                <TextField id='lastName' name='lastName' showInlineError={true} placeholder={'Last Name'}/>
                 <TextField name='email' showInlineError={true} placeholder={'email'} disabled/>
               </Form.Group>
-              <LongTextField name='bio' placeholder='Write a little bit about yourself.'/>
+              <LongTextField id='bio' name='bio' placeholder='Write a little bit about yourself.'/>
               <Form.Group widths={'equal'}>
                 <TextField name='title' showInlineError={true} placeholder={'Title'}/>
                 <TextField name='picture' showInlineError={true} placeholder={'URL to picture'}/>
@@ -82,7 +82,7 @@ class Home extends React.Component {
                 <MultiSelectField name='interests' showInlineError={true} placeholder={'Interests'}/>
                 <MultiSelectField name='projects' showInlineError={true} placeholder={'Projects'}/>
               </Form.Group>
-              <SubmitField value='Update'/>
+              <SubmitField id='home-page-submit' value='Update'/>
             </Segment>
           </AutoForm>
         </Grid.Column>
