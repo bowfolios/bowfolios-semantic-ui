@@ -1,19 +1,32 @@
-import { landingPage } from './landing.page.js';
-import { signoutPage } from './signout.page.js';
-import { navBar } from './navbar.component.js';
+import { landingPage } from './landing.page';
+import { signinPage } from './signin.page';
+import { signoutPage } from './signout.page';
+import { signupPage } from './signup.page';
+import { navBar } from './navbar.component';
 
 /* global fixture:false, test:false */
 
-fixture('Default Bowfolios Development Fixture')
+const username = 'johnson@hawaii.edu';
+const password = 'foo';
+
+fixture('Bowfolios test with default db')
     .page('http://localhost:3000');
 
-test('Test that landing page shows up', async (testController) => {
+test.skip('Test that landing page shows up', async (testController) => {
   await landingPage.isDisplayed(testController);
 });
 
-test('Test login and logout', async (testController) => {
-  await navBar.login(testController, 'johnson@hawaii.edu', 'foo');
-  await navBar.isLoggedIn(testController, 'johnson@hawaii.edu');
+test.skip('Test signin and signout', async (testController) => {
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, username, password);
   await navBar.logout(testController);
   await signoutPage.isDisplayed(testController);
+});
+
+test('Test signup page', async (testController) => {
+  // Create a new user email address that's guaranteed to be unique.
+  const newUser = `user-${new Date().getTime()}@foo.com`;
+  await navBar.gotoSignupPage(testController);
+  await signupPage.isDisplayed(testController);
+  await signupPage.signupUser(testController, newUser, password);
 });

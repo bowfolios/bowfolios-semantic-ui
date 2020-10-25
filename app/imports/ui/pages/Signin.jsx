@@ -52,7 +52,7 @@ export default class Signin extends React.Component {
                 <Segment stacked>
                   <Form.Input
                       label="Email"
-                      id="login-form-email"
+                      id="signin-form-email"
                       icon="user"
                       iconPosition="left"
                       name="email"
@@ -62,7 +62,7 @@ export default class Signin extends React.Component {
                   />
                   <Form.Input
                       label="Password"
-                      id="login-form-password"
+                      id="signin-form-password"
                       icon="lock"
                       iconPosition="left"
                       name="password"
@@ -70,7 +70,7 @@ export default class Signin extends React.Component {
                       type="password"
                       onChange={this.handleChange}
                   />
-                  <Form.Button id="login-form-submit" content="Submit"/>
+                  <Form.Button id="signin-form-submit" content="Submit"/>
                 </Segment>
               </Form>
               <Message>
