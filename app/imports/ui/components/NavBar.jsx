@@ -17,17 +17,17 @@ class NavBar extends React.Component {
           <span className='bowfolio-green' style={{ fontWeight: 800, fontSize: '24px' }}>Bowfolios</span>
         </Menu.Item>
         {this.props.currentUser ? (
-          <Menu.Item as={NavLink} activeClassName="active" exact to="/home" key='home'>Home</Menu.Item>
+          <Menu.Item as={NavLink} id="homeMenuItem" activeClassName="active" exact to="/home" key='home'>Home</Menu.Item>
         ) : ''}
-        <Menu.Item as={NavLink} activeClassName="active" exact to="/profiles" key='profiles'>Profiles</Menu.Item>
-        <Menu.Item as={NavLink} activeClassName="active" exact to="/projects" key='projects'>Projects</Menu.Item>
-        <Menu.Item as={NavLink} activeClassName="active" exact to="/interests" key='interests'>Interests</Menu.Item>
+        <Menu.Item as={NavLink} id="profilesMenuItem" activeClassName="active" exact to="/profiles" key='profiles'>Profiles</Menu.Item>
+        <Menu.Item as={NavLink} id="projectsMenuItem" activeClassName="active" exact to="/projects" key='projects'>Projects</Menu.Item>
+        <Menu.Item as={NavLink} id="interestsMenuItem" activeClassName="active" exact to="/interests" key='interests'>Interests</Menu.Item>
         {this.props.currentUser ? (
-            [<Menu.Item as={NavLink} activeClassName="active" exact to="/addProject" key='addP'>Add Project</Menu.Item>,
-            <Menu.Item as={NavLink} activeClassName="active" exact to="/filter" key='filter'>Filter</Menu.Item>]
+            [<Menu.Item as={NavLink} id="addProjectMenuItem"activeClassName="active" exact to="/addProject" key='addP'>Add Project</Menu.Item>,
+            <Menu.Item as={NavLink} id="filterMenuItem"activeClassName="active" exact to="/filter" key='filter'>Filter</Menu.Item>]
         ) : ''}
         {Roles.userIsInRole(Meteor.userId(), 'admin') ? (
-            <Menu.Item as={NavLink} activeClassName="active" exact to="/admin" key='admin'>Admin</Menu.Item>
+            <Menu.Item as={NavLink} id="adminMenuItem" activeClassName="active" exact to="/admin" key='admin'>Admin</Menu.Item>
         ) : ''}
         <Menu.Item position="right">
           {this.props.currentUser === '' ? (
