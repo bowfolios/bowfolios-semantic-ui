@@ -34,7 +34,7 @@
   },
   "scripts": {
     "start": "meteor --no-release-check --exclude-archs web.browser.legacy,web.cordova --settings ../config/settings.development.json",
-    "lint": "eslint --quiet --ext .jsx --ext .js ./imports",
-    "test": "testcafe chrome tests/*.testcafe.js"
+    "lint": "eslint --quiet --ext .jsx --ext .js ./imports ./tests",
+    "testcafe": "testcafe chrome tests/*.testcafe.js"
   }
 }

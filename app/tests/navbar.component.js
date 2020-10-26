@@ -33,6 +33,10 @@ class NavBar {
     await testController.click('#addProjectMenuItem');
   }
 
+  async gotoFilterPage(testController) {
+    await testController.click('#filterMenuItem');
+  }
+
   /** Check that the specified user is currently logged in. */
   async isLoggedIn(testController, username) {
     await testController.expect(Selector('#navbar-current-user').innerText).eql(username);

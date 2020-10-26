@@ -22,7 +22,7 @@ const makeSchema = (allInterests, allParticipants) => new SimpleSchema({
   description: String,
   homepage: String,
   picture: String,
-  interests: { type: Array, label: 'Interests', optional: true },
+  interests: { type: Array, label: 'Interests', optional: false },
   'interests.$': { type: String, allowedValues: allInterests },
   participants: { type: Array, label: 'Participants', optional: true },
   'participants.$': { type: String, allowedValues: allParticipants },

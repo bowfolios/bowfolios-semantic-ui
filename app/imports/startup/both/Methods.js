@@ -54,8 +54,14 @@ Meteor.methods({
     Projects.collection.insert({ name, description, picture, homepage });
     ProfilesProjects.collection.remove({ project: name });
     ProjectsInterests.collection.remove({ project: name });
-    interests.map((interest) => ProjectsInterests.collection.insert({ project: name, interest }));
-    participants.map((participant) => ProfilesProjects.collection.insert({ project: name, profile: participant }));
+    if (interests) {
+      interests.map((interest) => ProjectsInterests.collection.insert({ project: name, interest }));
+    } else {
+      throw new Meteor.Error('At least one interest is required.');
+    }
+    if (participants) {
+      participants.map((participant) => ProfilesProjects.collection.insert({ project: name, profile: participant }));
+    }
   },
 });
 

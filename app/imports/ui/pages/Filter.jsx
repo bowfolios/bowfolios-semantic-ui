@@ -85,8 +85,8 @@ class Filter extends React.Component {
       <Container id="filter-page">
         <AutoForm schema={bridge} onSubmit={data => this.submit(data)} >
           <Segment>
-            <MultiSelectField name='interests' showInlineError={true} placeholder={'Interests'}/>
-            <SubmitField value='Submit'/>
+            <MultiSelectField id='interests' name='interests' showInlineError={true} placeholder={'Interests'}/>
+            <SubmitField id='submit' value='Submit'/>
           </Segment>
         </AutoForm>
         <Card.Group style={{ paddingTop: '10px' }}>

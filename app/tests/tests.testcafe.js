@@ -7,6 +7,7 @@ import { projectsPage } from './projects.page';
 import { interestsPage } from './interests.page';
 import { homePage } from './home.page';
 import { addProjectPage } from './addproject.page';
+import { filterPage } from './filter.page';
 import { navBar } from './navbar.component';
 
 /* global fixture:false, test:false */
@@ -17,18 +18,18 @@ const credentials = { username: 'johnson@hawaii.edu', password: 'foo', firstName
 fixture('Bowfolios localhost test with default db')
     .page('http://localhost:3000');
 
-test.skip('Test that landing page shows up', async (testController) => {
+test('Test that landing page shows up', async (testController) => {
   await landingPage.isDisplayed(testController);
 });
 
-test.skip('Test that signin and signout work', async (testController) => {
+test('Test that signin and signout work', async (testController) => {
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.logout(testController);
   await signoutPage.isDisplayed(testController);
 });
 
-test.skip('Test that signup page, then logout works', async (testController) => {
+test('Test that signup page, then logout works', async (testController) => {
   // Create a new user email address that's guaranteed to be unique.
   const newUser = `user-${new Date().getTime()}@foo.com`;
   await navBar.gotoSignupPage(testController);
@@ -39,25 +40,25 @@ test.skip('Test that signup page, then logout works', async (testController) => 
   await signoutPage.isDisplayed(testController);
 });
 
-test.skip('Test that profiles page displays', async (testController) => {
+test('Test that profiles page displays', async (testController) => {
   await navBar.gotoProfilesPage(testController);
   await profilesPage.isDisplayed(testController);
   await profilesPage.hasDefaultProfiles(testController);
 });
 
-test.skip('Test that interests page displays', async (testController) => {
+test('Test that interests page displays', async (testController) => {
   await navBar.gotoInterestsPage(testController);
   await interestsPage.isDisplayed(testController);
   await interestsPage.hasDefaultInterests(testController);
 });
 
-test.skip('Test that projects page displays', async (testController) => {
+test('Test that projects page displays', async (testController) => {
   await navBar.gotoProjectsPage(testController);
   await projectsPage.isDisplayed(testController);
   await projectsPage.hasDefaultProjects(testController);
 });
 
-test.skip('Test that home page display and profile modification works', async (testController) => {
+test('Test that home page display and profile modification works', async (testController) => {
   await navBar.ensureLogout(testController);
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
@@ -73,4 +74,13 @@ test('Test that addProject page works', async (testController) => {
   await navBar.gotoAddProjectPage(testController);
   await addProjectPage.isDisplayed(testController);
   await addProjectPage.addProject(testController);
+});
+
+test('Test that filter page works', async (testController) => {
+  await navBar.ensureLogout(testController);
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoFilterPage(testController);
+  await filterPage.isDisplayed(testController);
+  await filterPage.filter(testController);
 });

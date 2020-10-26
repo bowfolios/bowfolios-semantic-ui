@@ -23,6 +23,16 @@ class AddProjectPage {
     await testController.typeText('#picture', picture);
     await testController.typeText('#homepage', homepage);
     await testController.typeText('#description', description);
+
+    // Select two interests.
+    const interestsSelector = Selector('#interests');
+    const hpcOption = interestsSelector.find('#HPC');
+    const aiOption = interestsSelector.find('#AI');
+    await testController.click(interestsSelector);
+    await testController.click(hpcOption);
+    await testController.click(aiOption);
+    await testController.click(interestsSelector);
+
     await testController.click('#submit');
     await testController.click(Selector('.swal-button--confirm'));
   }
