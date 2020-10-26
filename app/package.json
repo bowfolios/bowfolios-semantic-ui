@@ -35,6 +35,7 @@
   "scripts": {
     "start": "meteor --no-release-check --exclude-archs web.browser.legacy,web.cordova --settings ../config/settings.development.json",
     "lint": "eslint --quiet --ext .jsx --ext .js ./imports ./tests",
-    "testcafe": "testcafe chrome tests/*.testcafe.js"
+    "testcafe": "testcafe chrome tests/*.testcafe.js",
+    "testcafe-ci": "testcafe chrome:headless tests/*.testcafe.js -q --app \"meteor npm run start\""
   }
 }
