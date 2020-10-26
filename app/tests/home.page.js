@@ -1,5 +1,4 @@
 import { Selector } from 'testcafe';
-import { navBar } from './navbar.component';
 
 class HomePage {
   constructor() {
@@ -27,6 +26,7 @@ class HomePage {
   }
 
   /** Checks this page is displayed, then changes firstName field, checks update succeeded, then restores value. */
+  // Should be able to use setFirstName without generating warnings with first release after 1.9.4. (Fixed in pull/5584).
   async updateProfile(testController, firstName) {
     const newFirstName = 'New First Name';
     await this.isDisplayed(testController);

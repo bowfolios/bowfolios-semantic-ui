@@ -6,6 +6,7 @@ import { profilesPage } from './profiles.page';
 import { projectsPage } from './projects.page';
 import { interestsPage } from './interests.page';
 import { homePage } from './home.page';
+import { addProjectPage } from './addproject.page';
 import { navBar } from './navbar.component';
 
 /* global fixture:false, test:false */
@@ -56,10 +57,20 @@ test.skip('Test that projects page displays', async (testController) => {
   await projectsPage.hasDefaultProjects(testController);
 });
 
-test('Test that home page display and profile modification works', async (testController) => {
+test.skip('Test that home page display and profile modification works', async (testController) => {
   await navBar.ensureLogout(testController);
   await navBar.gotoSigninPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
   await homePage.isDisplayed(testController);
   await homePage.updateProfile(testController, credentials.firstName);
+  await navBar.ensureLogout(testController);
+});
+
+test('Test that addProject page works', async (testController) => {
+  await navBar.ensureLogout(testController);
+  await navBar.gotoSigninPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoAddProjectPage(testController);
+  await addProjectPage.isDisplayed(testController);
+  await addProjectPage.addProject(testController);
 });

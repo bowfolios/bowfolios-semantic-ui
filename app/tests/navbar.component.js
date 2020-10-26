@@ -11,31 +11,27 @@ class NavBar {
     }
   }
 
-  /** Go to the Signin Page. */
   async gotoSigninPage(testController) {
     await this.ensureLogout(testController);
     await testController.click('#login-dropdown');
     await testController.click('#login-dropdown-sign-in');
   }
 
-  /** Go to the Profiles Page. */
   async gotoProfilesPage(testController) {
-    await this.ensureLogout(testController);
     await testController.click('#profilesMenuItem');
   }
 
-  /** Go to the Interests Page. */
   async gotoInterestsPage(testController) {
-    await this.ensureLogout(testController);
     await testController.click('#interestsMenuItem');
   }
 
-  /** Go to the Projects Page. */
   async gotoProjectsPage(testController) {
-    await this.ensureLogout(testController);
     await testController.click('#projectsMenuItem');
   }
 
+  async gotoAddProjectPage(testController) {
+    await testController.click('#addProjectMenuItem');
+  }
 
   /** Check that the specified user is currently logged in. */
   async isLoggedIn(testController, username) {

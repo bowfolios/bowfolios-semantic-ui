@@ -56,16 +56,16 @@ class AddProject extends React.Component {
             <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.submit(data, fRef)} >
               <Segment>
                 <Form.Group widths={'equal'}>
-                  <TextField name='name' showInlineError={true} placeholder='Project name'/>
-                  <TextField name='picture' showInlineError={true} placeholder='Project picture URL'/>
-                  <TextField name='homepage' showInlineError={true} placeholder='Homepage URL'/>
+                  <TextField id='name' name='name' showInlineError={true} placeholder='Project name'/>
+                  <TextField id='picture' name='picture' showInlineError={true} placeholder='Project picture URL'/>
+                  <TextField id='homepage' name='homepage' showInlineError={true} placeholder='Homepage URL'/>
                 </Form.Group>
-                <LongTextField name='description' placeholder='Describe the project here'/>
+                <LongTextField id='description' name='description' placeholder='Describe the project here'/>
                 <Form.Group widths={'equal'}>
-                  <MultiSelectField name='interests' showInlineError={true} placeholder={'Interests'}/>
-                  <MultiSelectField name='participants' showInlineError={true} placeholder={'Participants'}/>
+                  <MultiSelectField id='interests' name='interests' showInlineError={true} placeholder={'Interests'}/>
+                  <MultiSelectField id='participants' name='participants' showInlineError={true} placeholder={'Participants'}/>
                 </Form.Group>
-                <SubmitField value='Submit'/>
+                <SubmitField id='submit' value='Submit'/>
                 <ErrorsField/>
               </Segment>
             </AutoForm>
