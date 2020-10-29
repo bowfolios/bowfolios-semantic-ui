@@ -27,13 +27,12 @@ jobs:
           path: ./app/.meteor/release
       - name: Echo release
         run: echo ${{ steps.package.outputs.content }}
-      - id: get-version-number
-        uses: actions/github-script@0.9.0
+      - uses: bhowell2/github-substring-action
+        id: one
         with:
-          script: |
-            const id = ${{ steps.package.outputs.content}}.split('@')[1]
-            core.setOutput('id', id)
-      - run: echo "${{steps.get-version-number.outputs.id}}"
+          value: ${{ steps.package.outputs.content }}
+          index_of_str: "METEOR@"
+      - run: echo "${{steps.one.outputs.substring}}"
       - uses: meteorengineer/setup-meteor@v1
         with:
           meteor-release: '1.11.1'
