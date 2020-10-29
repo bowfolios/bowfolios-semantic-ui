@@ -21,10 +21,10 @@ jobs:
           node-version: '12.x'
       - run: npm ci
       - name: Read package.json
-          id: package
-          uses: juliangruber/read-file-action@v1
-          with:
-            path: ./.meteor/release
+        id: package
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./.meteor/release
       - name: Echo release
         run: echo ${{ steps.package.outputs.content }}
       - name: setup meteor
