@@ -20,9 +20,18 @@ jobs:
         with:
           node-version: '12.x'
       - run: npm ci
+      - name: Read package.json
+          id: package
+          uses: juliangruber/read-file-action@v1
+          with:
+            path: ./.meteor/release
+      - name: Echo release
+        run: echo ${{ steps.package.outputs.content }}
+      - name: setup meteor
       - uses: meteorengineer/setup-meteor@v1
         with:
           meteor-release: '1.11.1'
       - run: meteor npm install
+      - name: run quality assurance
       - run: meteor npm run lint
       - run: meteor npm run testcafe-ci
