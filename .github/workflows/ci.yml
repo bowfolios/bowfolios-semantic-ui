@@ -32,6 +32,5 @@ jobs:
         with:
           meteor-release: '1.11.1'
       - run: meteor npm install
-      - name: run quality assurance
       - run: meteor npm run lint
       - run: meteor npm run testcafe-ci
