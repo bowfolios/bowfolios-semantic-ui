@@ -1,5 +1,3 @@
-name: test-bowfolios
-
 on: [push]
 
 defaults:
