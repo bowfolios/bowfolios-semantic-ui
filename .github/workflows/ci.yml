@@ -20,17 +20,6 @@ jobs:
         with:
           node-version: '12.x'
       - run: npm ci
-      - name: Read Meteor release file
-        id: releasefile
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./app/.meteor/release
-      - name: Get Meteor release number
-        uses: bhowell2/github-substring-action@v1
-        id: releasenum
-        with:
-          value: ${{ steps.releasefile.outputs.content }}
-          index_of_str: "METEOR@"
       - uses: meteorengineer/setup-meteor@v1
         with:
           meteor-release: ${{steps.releasenum.outputs.substring}}
