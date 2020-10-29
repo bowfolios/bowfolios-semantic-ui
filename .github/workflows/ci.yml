@@ -24,7 +24,7 @@ jobs:
         id: package
         uses: juliangruber/read-file-action@v1
         with:
-          path: .meteor/release
+          path: ./app/.meteor/release
       - name: Echo release
         run: echo ${{ steps.package.outputs.content }}
       - uses: meteorengineer/setup-meteor@v1
