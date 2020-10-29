@@ -19,19 +19,19 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
+      - run npm ci
       - name: Read release file
-        id: package
+        id: releasefile
         uses: juliangruber/read-file-action@v1
         with:
           path: ./app/.meteor/release
-      - name: Echo release
-        run: echo ${{ steps.package.outputs.content }}
-      - uses: bhowell2/github-substring-action@v1
-        id: one
+      - name: Get release number
+        uses: bhowell2/github-substring-action@v1
+        id: releasenum
         with:
-          value: ${{ steps.package.outputs.content }}
+          value: ${{ steps.releasefile.outputs.content }}
           index_of_str: "METEOR@"
-      - run: echo "${{steps.one.outputs.substring}}"
+      - run: echo "${{steps.releasenum.outputs.substring}}"
       - uses: meteorengineer/setup-meteor@v1
         with:
           meteor-release: '1.11.1'
