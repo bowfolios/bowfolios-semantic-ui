@@ -27,7 +27,7 @@ jobs:
           path: ./app/.meteor/release
       - name: Echo release
         run: echo ${{ steps.package.outputs.content }}
-      - uses: bhowell2/github-substring-action
+      - uses: bhowell2/github-substring-action@v1
         id: one
         with:
           value: ${{ steps.package.outputs.content }}
