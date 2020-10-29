@@ -21,8 +21,6 @@ jobs:
           node-version: '12.x'
       - run: npm ci
       - uses: meteorengineer/setup-meteor@v1
-        with:
-          meteor-release: ${{steps.releasenum.outputs.substring}}
       - run: meteor npm install
       - run: meteor npm run lint
       - run: meteor npm run testcafe-ci
