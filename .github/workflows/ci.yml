@@ -27,7 +27,6 @@ jobs:
           path: ./.meteor/release
       - name: Echo release
         run: echo ${{ steps.package.outputs.content }}
-      - name: setup meteor
       - uses: meteorengineer/setup-meteor@v1
         with:
           meteor-release: '1.11.1'
