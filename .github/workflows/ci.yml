@@ -19,7 +19,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - run npm ci
+      - run: npm ci
       - name: Read release file
         id: releasefile
         uses: juliangruber/read-file-action@v1
