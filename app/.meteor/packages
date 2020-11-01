@@ -40,3 +40,4 @@ ejson@1.1.1                      # https://docs.meteor.com/api/ejson.html
 # Application Performance Monitoring
 montiapm:agent                   # see http://montiapm.com
 zodern:hide-production-sourcemaps
+meteortesting:mocha

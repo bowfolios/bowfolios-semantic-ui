@@ -22,6 +22,8 @@
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
+    "chai": "^4.2.0",
+    "cross-env": "^7.0.2",
     "eslint": "^7.11.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-import": "^2.22.1",
@@ -35,6 +37,7 @@
   "scripts": {
     "start": "meteor --no-release-check --exclude-archs web.browser.legacy,web.cordova --settings ../config/settings.development.json",
     "lint": "eslint --quiet --ext .jsx --ext .js ./imports ./tests",
+    "test-unit": "cross-env TEST_CLIENT=0 meteor test --driver-package meteortesting:mocha --once",
     "testcafe": "testcafe chrome tests/*.testcafe.js",
     "testcafe-ci": "testcafe chrome:headless tests/*.testcafe.js -q --app \"meteor npm run start\""
   }
