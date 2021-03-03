@@ -46,52 +46,52 @@ class Signup extends React.Component {
       return <Redirect to={from}/>;
     }
     return (
-        <Container id="signup-page">
-          <Grid textAlign="center" verticalAlign="middle" centered columns={2}>
-            <Grid.Column>
-              <Header as="h2" textAlign="center">
+      <Container id="signup-page">
+        <Grid textAlign="center" verticalAlign="middle" centered columns={2}>
+          <Grid.Column>
+            <Header as="h2" textAlign="center">
                 Sign up for a new account
-              </Header>
-              <Form onSubmit={this.submit}>
-                <Segment stacked>
-                  <Form.Input
-                      label="Email"
-                      id="signup-form-email"
-                      icon="user"
-                      iconPosition="left"
-                      name="email"
-                      type="email"
-                      placeholder="E-mail address"
-                      onChange={this.handleChange}
-                  />
-                  <Form.Input
-                      label="Password"
-                      id="signup-form-password"
-                      icon="lock"
-                      iconPosition="left"
-                      name="password"
-                      placeholder="Password"
-                      type="password"
-                      onChange={this.handleChange}
-                  />
-                  <Form.Button id="signup-form-submit" content="Submit"/>
-                </Segment>
-              </Form>
-              <Message>
+            </Header>
+            <Form onSubmit={this.submit}>
+              <Segment stacked>
+                <Form.Input
+                  label="Email"
+                  id="signup-form-email"
+                  icon="user"
+                  iconPosition="left"
+                  name="email"
+                  type="email"
+                  placeholder="E-mail address"
+                  onChange={this.handleChange}
+                />
+                <Form.Input
+                  label="Password"
+                  id="signup-form-password"
+                  icon="lock"
+                  iconPosition="left"
+                  name="password"
+                  placeholder="Password"
+                  type="password"
+                  onChange={this.handleChange}
+                />
+                <Form.Button id="signup-form-submit" content="Submit"/>
+              </Segment>
+            </Form>
+            <Message>
                 Already have an account? Login <Link to="/signin">here</Link>
-              </Message>
-              {this.state.error === '' ? (
-                  ''
-              ) : (
-                  <Message
-                      error
-                      header="Registration was not successful"
-                      content={this.state.error}
-                  />
-              )}
-            </Grid.Column>
-          </Grid>
-        </Container>
+            </Message>
+            {this.state.error === '' ? (
+              ''
+            ) : (
+              <Message
+                error
+                header="Registration was not successful"
+                content={this.state.error}
+              />
+            )}
+          </Grid.Column>
+        </Grid>
+      </Container>
     );
   }
 }

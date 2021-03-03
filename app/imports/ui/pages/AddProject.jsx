@@ -50,27 +50,27 @@ class AddProject extends React.Component {
     const formSchema = makeSchema(allInterests, allParticipants);
     const bridge = new SimpleSchema2Bridge(formSchema);
     return (
-        <Grid id="add-project-page" container centered>
-          <Grid.Column>
-            <Header as="h2" textAlign="center">Add Project</Header>
-            <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.submit(data, fRef)} >
-              <Segment>
-                <Form.Group widths={'equal'}>
-                  <TextField id='name' name='name' showInlineError={true} placeholder='Project name'/>
-                  <TextField id='picture' name='picture' showInlineError={true} placeholder='Project picture URL'/>
-                  <TextField id='homepage' name='homepage' showInlineError={true} placeholder='Homepage URL'/>
-                </Form.Group>
-                <LongTextField id='description' name='description' placeholder='Describe the project here'/>
-                <Form.Group widths={'equal'}>
-                  <MultiSelectField id='interests' name='interests' showInlineError={true} placeholder={'Interests'}/>
-                  <MultiSelectField id='participants' name='participants' showInlineError={true} placeholder={'Participants'}/>
-                </Form.Group>
-                <SubmitField id='submit' value='Submit'/>
-                <ErrorsField/>
-              </Segment>
-            </AutoForm>
-          </Grid.Column>
-        </Grid>
+      <Grid id="add-project-page" container centered>
+        <Grid.Column>
+          <Header as="h2" textAlign="center">Add Project</Header>
+          <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.submit(data, fRef)} >
+            <Segment>
+              <Form.Group widths={'equal'}>
+                <TextField id='name' name='name' showInlineError={true} placeholder='Project name'/>
+                <TextField id='picture' name='picture' showInlineError={true} placeholder='Project picture URL'/>
+                <TextField id='homepage' name='homepage' showInlineError={true} placeholder='Homepage URL'/>
+              </Form.Group>
+              <LongTextField id='description' name='description' placeholder='Describe the project here'/>
+              <Form.Group widths={'equal'}>
+                <MultiSelectField id='interests' name='interests' showInlineError={true} placeholder={'Interests'}/>
+                <MultiSelectField id='participants' name='participants' showInlineError={true} placeholder={'Participants'}/>
+              </Form.Group>
+              <SubmitField id='submit' value='Submit'/>
+              <ErrorsField/>
+            </Segment>
+          </AutoForm>
+        </Grid.Column>
+      </Grid>
     );
   }
 }
