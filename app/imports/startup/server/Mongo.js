@@ -7,15 +7,19 @@ import { Profiles } from '../../api/profiles/Profiles';
 import { ProfilesProjects } from '../../api/profiles/ProfilesProjects';
 import { ProfilesInterests } from '../../api/profiles/ProfilesInterests';
 import { Interests } from '../../api/interests/Interests';
+import { ROLE } from '../../api/role/Role';
 
 /* eslint-disable no-console */
 
 /** Define a user in the Meteor accounts package. This enables login. Username is the email address. */
 function createUser(email, role) {
   const userID = Accounts.createUser({ username: email, email, password: 'foo' });
-  if (role === 'admin') {
+  if (role === ROLE.ADMIN) {
     Roles.createRole(role, { unlessExists: true });
-    Roles.addUsersToRoles(userID, 'admin');
+    Roles.addUsersToRoles(userID, ROLE.ADMIN);
+  } else {
+    Roles.createRole(ROLE.REGULAR, { unlessExists: true });
+    Roles.addUsersToRoles(userID, ROLE.REGULAR);
   }
 }
 
