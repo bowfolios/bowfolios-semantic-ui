@@ -312,8 +312,8 @@ class BaseCollection {
    * @param docID A docID from this collection.
    * @returns { Object } An object representing this document.
    */
-  dumpOne(docID) { // eslint-disable-line
-    throw new Meteor.Error(`Default dumpOne method invoked by collection ${this._collectionName}`, '', Error().stack);
+  dumpOne(docID) {
+    throw new Meteor.Error(`Default dumpOne method invoked by collection ${this._collectionName} on ${docID}`, '', Error().stack);
   }
 
   /**

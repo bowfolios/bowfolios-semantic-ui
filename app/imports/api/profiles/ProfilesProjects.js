@@ -1,5 +1,6 @@
 import SimpleSchema from 'simpl-schema';
 import BaseCollection from '../base/BaseCollection';
+// eslint-disable-next-line import/no-cycle
 import { Profiles } from './Profiles';
 import { Projects } from '../projects/Projects-old';
 
@@ -17,6 +18,7 @@ class ProfilesProjectsCollection extends BaseCollection {
   }
 
   update(docID, { profile, project }) {
+    this.assertDefined(docID);
     const updateData = {};
     if (profile) {
       updateData.profile = profile;
@@ -33,7 +35,7 @@ class ProfilesProjectsCollection extends BaseCollection {
 
   checkIntegrity() {
     const problems = [];
-    this.find().forEach((doc) => {
+    this.find({}, {}).forEach((doc) => {
       if (!Profiles.isDefined(doc.profile)) {
         problems.push(`bad profile ${doc.profile}`);
       }

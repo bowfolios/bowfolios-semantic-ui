@@ -12,6 +12,15 @@ class ProjectsCollection extends BaseCollection {
       picture: { type: String, optional: true },
     }));
   }
+
+  define({ name, homepage, description, picture }) {
+    return this._collection.insert({ name, homepage, description, picture });
+  }
+
+  update(docID, { name, homepage, description, picture }) {
+    this.assertDefined(docID);
+    const updateData = {};
+  }
 }
 
 export const Projects = new ProjectsCollection();

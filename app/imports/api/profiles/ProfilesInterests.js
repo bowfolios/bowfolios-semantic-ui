@@ -17,6 +17,7 @@ class ProfilesInterestsCollection extends BaseCollection {
   }
 
   update(docID, { profile, interest }) {
+    this.assertDefined(docID);
     const updateData = {};
     if (profile) {
       updateData.profile = profile;
