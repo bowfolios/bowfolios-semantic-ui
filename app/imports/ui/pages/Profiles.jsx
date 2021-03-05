@@ -7,7 +7,7 @@ import { _ } from 'meteor/underscore';
 import { Profiles } from '../../api/profiles/Profiles';
 import { ProfilesInterests } from '../../api/profiles/ProfilesInterests';
 import { ProfilesProjects } from '../../api/profiles/ProfilesProjects';
-import { Projects } from '../../api/projects/Projects';
+import { Projects } from '../../api/projects/Projects-old';
 
 /** Returns the Profile and associated Projects and Interests associated with the passed user email. */
 function getProfileData(email) {

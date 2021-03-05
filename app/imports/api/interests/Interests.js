@@ -1,7 +1,7 @@
 import SimpleSchema from 'simpl-schema';
+import { Meteor } from 'meteor/meteor';
 import BaseCollection from '../base/BaseCollection';
 import { ProfilesInterests } from '../profiles/ProfilesInterests';
-import { Meteor } from 'meteor/meteor';
 import { ProjectsInterests } from '../projects/ProjectsInterests';
 
 class InterestCollection extends BaseCollection {
@@ -13,8 +13,7 @@ class InterestCollection extends BaseCollection {
   }
 
   define({ name }) {
-    const interestID = this._collection.insert({ name });
-    return interestID;
+    return this._collection.insert({ name });
   }
 
   update(docID, { name }) {
@@ -27,12 +26,11 @@ class InterestCollection extends BaseCollection {
   }
 
   removeIt(name) {
-    const interestID = this.getID(name);
-    const profileInterests = ProfilesInterests.find({ interestID }).fetch();
+    const profileInterests = ProfilesInterests.find({ interest: name }).fetch();
     if (profileInterests.length > 0) {
       throw new Meteor.Error(`Interest ${name} is referenced by collection ProfileInterests.`);
     }
-    const projectInterests = ProjectsInterests.find({ interestID }).fetch();
+    const projectInterests = ProjectsInterests.find({ interest: name }).fetch();
     if (projectInterests.length > 0) {
       throw new Meteor.Error(`Interest ${name} is referenced by collection ProjectInterests.`);
     }

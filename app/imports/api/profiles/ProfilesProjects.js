@@ -1,24 +1,57 @@
-import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
-import { Tracker } from 'meteor/tracker';
+import BaseCollection from '../base/BaseCollection';
+import { Profiles } from './Profiles';
+import { Projects } from '../projects/Projects-old';
 
-/** Encapsulates state and variable values for this collection. */
-class ProfilesProjectsCollection {
+class ProfilesProjectsCollection extends BaseCollection {
+
   constructor() {
-    // The name of this collection.
-    this.name = 'ProfilesProjectsCollection';
-    // Define the Mongo collection.
-    this.collection = new Mongo.Collection(this.name);
-    // Define the structure of each document in the collection.
-    this.schema = new SimpleSchema({
+    super('ProfilesProjects', new SimpleSchema({
       profile: String,
       project: String,
-    }, { tracker: Tracker });
-    // Ensure collection documents obey schema.
-    this.collection.attachSchema(this.schema);
-    // Define names for publications and subscriptions
-    this.userPublicationName = `${this.name}.publication.user`;
-    this.adminPublicationName = `${this.name}.publication.admin`;
+    }));
+  }
+
+  define({ profile, project }) {
+    return this._collection.insert({ profile, project });
+  }
+
+  update(docID, { profile, project }) {
+    const updateData = {};
+    if (profile) {
+      updateData.profile = profile;
+    }
+    if (project) {
+      updateData.project = project;
+    }
+    this._collection.update(docID, { $set: updateData });
+  }
+
+  removeIt(name) {
+    return super.removeIt(name);
+  }
+
+  checkIntegrity() {
+    const problems = [];
+    this.find().forEach((doc) => {
+      if (!Profiles.isDefined(doc.profile)) {
+        problems.push(`bad profile ${doc.profile}`);
+      }
+      if (!Projects.isDefined(doc.project)) {
+        problems.push(`bad project ${doc.project}`);
+      }
+    });
+    return problems;
+  }
+
+  dumpOne(docID) {
+    const doc = this.findDoc(docID);
+    const profile = doc.profile;
+    const project = doc.project;
+    return {
+      profile,
+      project,
+    };
   }
 }
 

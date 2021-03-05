@@ -1,24 +1,56 @@
-import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
-import { Tracker } from 'meteor/tracker';
+import BaseCollection from '../base/BaseCollection';
+import { Profiles } from './Profiles';
+import { Interests } from '../interests/Interests';
 
-/** Encapsulates state and variable values for this collection. */
-class ProfilesInterestsCollection {
+class ProfilesInterestsCollection extends BaseCollection {
+
   constructor() {
-    // The name of this collection.
-    this.name = 'ProfilesInterestsCollection';
-    // Define the Mongo collection.
-    this.collection = new Mongo.Collection(this.name);
-    // Define the structure of each document in the collection.
-    this.schema = new SimpleSchema({
+    super('ProfilesInterests', new SimpleSchema({
       profile: String,
       interest: String,
-    }, { tracker: Tracker });
-    // Ensure collection documents obey schema.
-    this.collection.attachSchema(this.schema);
-    // Define names for publications and subscriptions
-    this.userPublicationName = `${this.name}.publication.user`;
-    this.adminPublicationName = `${this.name}.publication.admin`;
+    }));
+  }
+
+  define({ profile, interest }) {
+    return this._collection.insert({ profile, interest });
+  }
+
+  update(docID, { profile, interest }) {
+    const updateData = {};
+    if (profile) {
+      updateData.profile = profile;
+    }
+    if (interest) {
+      updateData.interest = interest;
+    }
+    this._collection.update(docID, { $set: updateData });
+  }
+
+  removeIt(name) {
+    return super.removeIt(name);
+  }
+
+  checkIntegrity() {
+    const problems = [];
+    this.find().forEach((doc) => {
+      if (!Profiles.isDefined(doc.profile)) {
+        problems.push(`bad profile ${doc.profile}`);
+      }
+      if (!Interests.isDefined(doc.interest)) {
+        problems.push(`bad interest ${doc.interest}`);
+      }
+    });
+    return problems;
+  }
+
+  dumpOne(docID) {
+    const doc = this.findDoc(docID);
+    const profile = doc.profile;
+    const interest = doc.interest;
+    return {
+      profile, interest,
+    };
   }
 }
 

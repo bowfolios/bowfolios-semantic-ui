@@ -32,6 +32,8 @@
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-utils": "^2.1.0",
+    "faker": "^5.4.0",
+    "fast-check": "^2.13.0",
     "testcafe": "^1.11.0"
   },
   "scripts": {

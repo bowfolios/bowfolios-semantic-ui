@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Roles } from 'meteor/alanning:roles';
-import { Projects } from '../../api/projects/Projects';
+import { Projects } from '../../api/projects/Projects-old';
 import { ProjectsInterests } from '../../api/projects/ProjectsInterests';
 import { Profiles } from '../../api/profiles/Profiles';
 import { ProfilesProjects } from '../../api/profiles/ProfilesProjects';

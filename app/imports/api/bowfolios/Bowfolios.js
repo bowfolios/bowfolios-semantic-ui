@@ -4,7 +4,7 @@ import { Interests } from '../interests/Interests';
 import { Profiles } from '../profiles/Profiles';
 import { ProfilesInterests } from '../profiles/ProfilesInterests';
 import { ProfilesProjects } from '../profiles/ProfilesProjects';
-import { Projects } from '../projects/Projects';
+import { Projects } from '../projects/Projects-old';
 import { ProjectsInterests } from '../projects/ProjectsInterests';
 
 class BowfoliosClass {
