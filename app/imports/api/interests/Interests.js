@@ -1,24 +1,56 @@
-import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
-import { Tracker } from 'meteor/tracker';
+import BaseCollection from '../base/BaseCollection';
+import { ProfilesInterests } from '../profiles/ProfilesInterests';
+import { Meteor } from 'meteor/meteor';
+import { ProjectsInterests } from '../projects/ProjectsInterests';
 
-/** Encapsulates state and variable values for this collection. */
-class InterestsCollection {
+class InterestCollection extends BaseCollection {
+
   constructor() {
-    // The name of this collection.
-    this.name = 'InterestsCollection';
-    // Define the Mongo collection.
-    this.collection = new Mongo.Collection(this.name);
-    // Define the structure of each document in the collection.
-    this.schema = new SimpleSchema({
+    super('Interest', new SimpleSchema({
       name: { type: String, index: true, unique: true },
-    }, { tracker: Tracker });
-    // Ensure collection documents obey schema.
-    this.collection.attachSchema(this.schema);
-    // Define names for publications and subscriptions
-    this.userPublicationName = `${this.name}.publication.user`;
-    this.adminPublicationName = `${this.name}.publication.admin`;
+    }));
+  }
+
+  define({ name }) {
+    const interestID = this._collection.insert({ name });
+    return interestID;
+  }
+
+  update(docID, { name }) {
+    this.assertDefined(docID);
+    const updateData = {};
+    if (name) {
+      updateData.name = name;
+    }
+    this._collection.update(docID, { $set: updateData });
+  }
+
+  removeIt(name) {
+    const interestID = this.getID(name);
+    const profileInterests = ProfilesInterests.find({ interestID }).fetch();
+    if (profileInterests.length > 0) {
+      throw new Meteor.Error(`Interest ${name} is referenced by collection ProfileInterests.`);
+    }
+    const projectInterests = ProjectsInterests.find({ interestID }).fetch();
+    if (projectInterests.length > 0) {
+      throw new Meteor.Error(`Interest ${name} is referenced by collection ProjectInterests.`);
+    }
+    return super.removeIt(name);
+  }
+
+  checkIntegrity() {
+    // Interests don't depend on any other collection.
+    return [];
+  }
+
+  dumpOne(docID) {
+    const doc = this.findDoc(docID);
+    const name = doc.name;
+    return {
+      name,
+    };
   }
 }
 
-export const Interests = new InterestsCollection();
+export const Interests = new InterestCollection();

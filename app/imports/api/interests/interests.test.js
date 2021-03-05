@@ -9,8 +9,10 @@ if (Meteor.isServer) {
   describe('InterestsCollection', function testSuite() {
     it('Check that a new interest can be defined and retrieved', function test() {
       const name = `test-interest-${new Date().getTime()}`;
-      Interests.collection.insert({ name });
-      expect(Interests.collection.findOne({ name }).name).to.equal(name);
+      const docID = Interests.define({ name });
+      expect(Interests.isDefined(docID)).to.be.true;
+      const doc = Interests.findDoc(docID);
+      expect(doc.name).to.equal(name);
     });
   });
 }
