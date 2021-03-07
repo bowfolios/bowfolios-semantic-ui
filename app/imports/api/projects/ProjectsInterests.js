@@ -1,24 +1,56 @@
-import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
-import { Tracker } from 'meteor/tracker';
+import BaseCollection from '../base/BaseCollection';
+import { Projects } from './Projects';
+import { Interests } from '../interests/Interests';
 
-/** Encapsulates state and variable values for this collection. */
-class ProjectsInterestsCollection {
+class ProjectsInterestsCollection extends BaseCollection {
   constructor() {
-    // The name of this collection.
-    this.name = 'ProjectsInterestsCollection';
-    // Define the Mongo collection.
-    this.collection = new Mongo.Collection(this.name);
-    // Define the structure of each document in the collection.
-    this.schema = new SimpleSchema({
+    super('ProjectsInterests', new SimpleSchema({
       project: String,
       interest: String,
-    }, { tracker: Tracker });
-    // Ensure collection documents obey schema.
-    this.collection.attachSchema(this.schema);
-    // Define names for publications and subscriptions
-    this.userPublicationName = `${this.name}.publication.user`;
-    this.adminPublicationName = `${this.name}.publication.admin`;
+    }));
+  }
+
+  define({ project, interest }) {
+    return this._collection.insert({ project, interest });
+  }
+
+  update(docID, { project, interest }) {
+    this.assertDefined(docID);
+    const updateData = {};
+    if (project) {
+      updateData.project = project;
+    }
+    if (interest) {
+      updateData.interest = interest;
+    }
+    this._collection.update(docID, { $set: updateData });
+  }
+
+  removeIt(name) {
+    return super.removeIt(name);
+  }
+
+  checkIntegrity() {
+    const problems = [];
+    this.find().forEach((doc) => {
+      if (!Projects.isDefined(doc.project)) {
+        problems.push(`bad project ${doc.project}`);
+      }
+      if (!Interests.isDefined(doc.interest)) {
+        problems.push(`bad interest ${doc.interest}`);
+      }
+    });
+    return problems;
+  }
+
+  dumpOne(docID) {
+    const doc = this.findDoc(docID);
+    const project = doc.project;
+    const interest = doc.interest;
+    return {
+      project, interest,
+    };
   }
 }
 

@@ -55,7 +55,7 @@ class ProfileCollection extends BaseCollection {
   }
 
   checkIntegrity() {
-    // Interests don't depend on any other collection.
+    // Profiles don't depend on any other collection.
     return [];
   }
 

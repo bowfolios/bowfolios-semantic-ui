@@ -2,7 +2,7 @@ import SimpleSchema from 'simpl-schema';
 import BaseCollection from '../base/BaseCollection';
 // eslint-disable-next-line import/no-cycle
 import { Profiles } from './Profiles';
-import { Projects } from '../projects/Projects-old';
+import { Projects } from '../projects/Projects';
 
 class ProfilesProjectsCollection extends BaseCollection {
 

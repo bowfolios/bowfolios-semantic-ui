@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Projects } from '../../api/projects/Projects-old';
+import { Projects } from '../../api/projects/Projects';
 import { Profiles } from '../../api/profiles/Profiles';
 import { ProfilesInterests } from '../../api/profiles/ProfilesInterests';
 import { ProfilesProjects } from '../../api/profiles/ProfilesProjects';

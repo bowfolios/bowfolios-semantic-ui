@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import { Profiles } from '../../api/profiles/Profiles';
 import { ProfilesProjects } from '../../api/profiles/ProfilesProjects';
-import { Projects } from '../../api/projects/Projects-old';
+import { Projects } from '../../api/projects/Projects';
 import { ProjectsInterests } from '../../api/projects/ProjectsInterests';
 
 /** Gets the Project data as well as Profiles and Interests associated with the passed Project name. */

@@ -8,7 +8,7 @@ import { Interests } from '../../api/interests/Interests';
 import { Profiles } from '../../api/profiles/Profiles';
 import { ProfilesInterests } from '../../api/profiles/ProfilesInterests';
 import { ProfilesProjects } from '../../api/profiles/ProfilesProjects';
-import { Projects } from '../../api/projects/Projects-old';
+import { Projects } from '../../api/projects/Projects';
 import { ProjectsInterests } from '../../api/projects/ProjectsInterests';
 
 /** Returns the Profiles and Projects associated with the passed Interest. */

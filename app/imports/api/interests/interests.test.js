@@ -47,5 +47,16 @@ if (Meteor.isServer) {
       );
       done();
     });
+
+    it('Can dumpOne, removeIt, and restoreOne', function test4() {
+      let interestDoc = Interests.findOne({});
+      let docID = interestDoc._id;
+      const dumpObject = Interests.dumpOne(docID);
+      Interests.removeIt(docID);
+      expect(Interests.isDefined(docID)).to.be.false;
+      docID = Interests.restoreOne(dumpObject);
+      interestDoc = Interests.findDoc(docID);
+      expect(interestDoc.name).to.equal(dumpObject.name);
+    });
   });
 }
