@@ -21,10 +21,10 @@ const makeSchema = (allInterests) => new SimpleSchema({
 });
 
 function getProfileData(email) {
-  const data = Profiles.collection.findOne({ email });
-  const interests = _.pluck(ProfilesInterests.collection.find({ profile: email }).fetch(), 'interest');
-  const projects = _.pluck(ProfilesProjects.collection.find({ profile: email }).fetch(), 'project');
-  const projectPictures = projects.map(project => Projects.collection.findOne({ name: project }).picture);
+  const data = Profiles.findOne({ email });
+  const interests = _.pluck(ProfilesInterests.find({ profile: email }).fetch(), 'interest');
+  const projects = _.pluck(ProfilesProjects.find({ profile: email }).fetch(), 'project');
+  const projectPictures = projects.map(project => Projects.findOne({ name: project }).picture);
   return _.extend({ }, data, { interests, projects: projectPictures });
 }
 
@@ -76,10 +76,10 @@ class Filter extends React.Component {
 
   /** Render the page once subscriptions have been received. */
   renderPage() {
-    const allInterests = _.pluck(Interests.collection.find().fetch(), 'name');
+    const allInterests = _.pluck(Interests.find().fetch(), 'name');
     const formSchema = makeSchema(allInterests);
     const bridge = new SimpleSchema2Bridge(formSchema);
-    const emails = _.pluck(ProfilesInterests.collection.find({ interest: { $in: this.state.interests } }).fetch(), 'profile');
+    const emails = _.pluck(ProfilesInterests.find({ interest: { $in: this.state.interests } }).fetch(), 'profile');
     const profileData = _.uniq(emails).map(email => getProfileData(email));
     return (
       <Container id="filter-page">
@@ -105,11 +105,11 @@ Filter.propTypes = {
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   // Ensure that minimongo is populated with all collections prior to running render().
-  const sub1 = Meteor.subscribe(Profiles.userPublicationName);
-  const sub2 = Meteor.subscribe(ProfilesInterests.userPublicationName);
-  const sub3 = Meteor.subscribe(ProfilesProjects.userPublicationName);
-  const sub4 = Meteor.subscribe(Projects.userPublicationName);
-  const sub5 = Meteor.subscribe(Interests.userPublicationName);
+  const sub1 = Profiles.subscribe();
+  const sub2 = ProfilesInterests.subscribe();
+  const sub3 = ProfilesProjects.subscribe();
+  const sub4 = Projects.subscribe();
+  const sub5 = Interests.subscribe();
   return {
     ready: sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready(),
   };

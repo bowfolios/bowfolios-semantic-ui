@@ -53,14 +53,14 @@ class Home extends React.Component {
   renderPage() {
     const email = Meteor.user().username;
     // Create the form schema for uniforms. Need to determine all interests and projects for muliselect list.
-    const allInterests = _.pluck(Interests.collection.find().fetch(), 'name');
-    const allProjects = _.pluck(Projects.collection.find().fetch(), 'name');
+    const allInterests = _.pluck(Interests.find().fetch(), 'name');
+    const allProjects = _.pluck(Projects.find().fetch(), 'name');
     const formSchema = makeSchema(allInterests, allProjects);
     const bridge = new SimpleSchema2Bridge(formSchema);
     // Now create the model with all the user information.
-    const projects = _.pluck(ProfilesProjects.collection.find({ profile: email }).fetch(), 'project');
-    const interests = _.pluck(ProfilesInterests.collection.find({ profile: email }).fetch(), 'interest');
-    const profile = Profiles.collection.findOne({ email });
+    const projects = _.pluck(ProfilesProjects.find({ profile: email }).fetch(), 'project');
+    const interests = _.pluck(ProfilesInterests.find({ profile: email }).fetch(), 'interest');
+    const profile = Profiles.findOne({ email });
     const model = _.extend({}, profile, { interests, projects });
     return (
       <Grid id="home-page" container centered>
@@ -98,11 +98,11 @@ Home.propTypes = {
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   // Ensure that minimongo is populated with all collections prior to running render().
-  const sub1 = Meteor.subscribe(Interests.userPublicationName);
-  const sub2 = Meteor.subscribe(Profiles.userPublicationName);
-  const sub3 = Meteor.subscribe(ProfilesInterests.userPublicationName);
-  const sub4 = Meteor.subscribe(ProfilesProjects.userPublicationName);
-  const sub5 = Meteor.subscribe(Projects.userPublicationName);
+  const sub1 = Interests.subscribe();
+  const sub2 = Profiles.subscribe();
+  const sub3 = ProfilesInterests.subscribe();
+  const sub4 = ProfilesProjects.subscribe();
+  const sub5 = Projects.subscribe();
   return {
     ready: sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready(),
   };

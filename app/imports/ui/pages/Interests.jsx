@@ -13,10 +13,10 @@ import { ProjectsInterests } from '../../api/projects/ProjectsInterests';
 
 /** Returns the Profiles and Projects associated with the passed Interest. */
 function getInterestData(name) {
-  const profiles = _.pluck(ProfilesInterests.collection.find({ interest: name }).fetch(), 'profile');
-  const profilePictures = profiles.map(profile => Profiles.collection.findOne({ email: profile }).picture);
-  const projects = _.pluck(ProjectsInterests.collection.find({ interest: name }).fetch(), 'project');
-  const projectPictures = projects.map(project => Projects.collection.findOne({ name: project }).picture);
+  const profiles = _.pluck(ProfilesInterests.find({ interest: name }).fetch(), 'profile');
+  const profilePictures = profiles.map(profile => Profiles.findOne({ email: profile }).picture);
+  const projects = _.pluck(ProjectsInterests.find({ interest: name }).fetch(), 'project');
+  const projectPictures = projects.map(project => Projects.findOne({ name: project }).picture);
   // console.log(_.extend({ }, data, { interests, projects: projectPictures }));
   return _.extend({ }, { name, profiles: profilePictures, projects: projectPictures });
 }
@@ -48,7 +48,7 @@ class InterestsPage extends React.Component {
 
   /** Render the page once subscriptions have been received. */
   renderPage() {
-    const interests = _.pluck(Interests.collection.find().fetch(), 'name');
+    const interests = _.pluck(Interests.find().fetch(), 'name');
     const interestData = interests.map(interest => getInterestData(interest));
     return (
       <Container id="interests-page">
@@ -67,12 +67,12 @@ InterestsPage.propTypes = {
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   // Ensure that minimongo is populated with all collections prior to running render().
-  const sub1 = Meteor.subscribe(ProfilesProjects.userPublicationName);
-  const sub2 = Meteor.subscribe(Projects.userPublicationName);
-  const sub3 = Meteor.subscribe(ProjectsInterests.userPublicationName);
-  const sub4 = Meteor.subscribe(Profiles.userPublicationName);
-  const sub5 = Meteor.subscribe(Interests.userPublicationName);
-  const sub6 = Meteor.subscribe(ProfilesInterests.userPublicationName);
+  const sub1 = ProfilesProjects.subscribe();
+  const sub2 = Projects.subscribe();
+  const sub3 = ProjectsInterests.subscribe();
+  const sub4 = Profiles.subscribe();
+  const sub5 = Interests.subscribe();
+  const sub6 = ProfilesInterests.subscribe();
   return {
     ready: sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready() && sub6.ready(),
   };

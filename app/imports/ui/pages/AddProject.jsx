@@ -45,8 +45,8 @@ class AddProject extends React.Component {
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
   render() {
     let fRef = null;
-    const allInterests = _.pluck(Interests.collection.find().fetch(), 'name');
-    const allParticipants = _.pluck(Profiles.collection.find().fetch(), 'email');
+    const allInterests = _.pluck(Interests.find().fetch(), 'name');
+    const allParticipants = _.pluck(Profiles.find().fetch(), 'email');
     const formSchema = makeSchema(allInterests, allParticipants);
     const bridge = new SimpleSchema2Bridge(formSchema);
     return (
@@ -82,11 +82,11 @@ AddProject.propTypes = {
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   // Ensure that minimongo is populated with all collections prior to running render().
-  const sub1 = Meteor.subscribe(Interests.userPublicationName);
-  const sub2 = Meteor.subscribe(Profiles.userPublicationName);
-  const sub3 = Meteor.subscribe(ProfilesInterests.userPublicationName);
-  const sub4 = Meteor.subscribe(ProfilesProjects.userPublicationName);
-  const sub5 = Meteor.subscribe(Projects.userPublicationName);
+  const sub1 = Interests.subscribe();
+  const sub2 = Profiles.subscribe();
+  const sub3 = ProfilesInterests.subscribe();
+  const sub4 = ProfilesProjects.subscribe();
+  const sub5 = Projects.subscribe();
   return {
     ready: sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready() && sub5.ready(),
   };
