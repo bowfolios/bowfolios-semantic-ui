@@ -4,6 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { Container, Form, Grid, Header, Message, Segment } from 'semantic-ui-react';
 import { Accounts } from 'meteor/accounts-base';
 import { Profiles } from '../../api/profiles/Profiles';
+import { defineMethod } from '../../api/base/BaseCollection.methods';
 
 /**
  * Signup component is similar to signin component, but we create a new user instead.
@@ -27,7 +28,10 @@ class Signup extends React.Component {
       if (err) {
         this.setState({ error: err.reason });
       } else {
-        Profiles.insert({ email }, (err2) => {
+        const collectionName = Profiles.getCollectionName();
+        const definitionData = {};
+        definitionData.email = email;
+        defineMethod.call({ collectionName, definitionData }, (err2) => {
           if (err2) {
             this.setState({ error: err2.reason });
           } else {
