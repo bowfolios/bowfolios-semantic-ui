@@ -13,6 +13,10 @@ class InterestCollection extends BaseCollection {
   }
 
   define({ name }) {
+    const doc = this._collection.findOne({ name });
+    if (doc) {
+      return doc._id;
+    }
     return this._collection.insert({ name });
   }
 
