@@ -1,4 +1,4 @@
-name: ci-bowfolios
+name: ci-bowfolios-semantic-ui
 
 on:
   push:
